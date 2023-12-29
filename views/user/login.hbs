@@ -1,0 +1,104 @@
+<div class="row">
+    <div class="col-md-6 m-auto">
+        <div class=" container mt-5 pl-5">
+            <h2 class="text-center">Login</h2>
+            <form action="/login" id="login" method="POST">
+            {{#if loginErr}}
+                <p class="error">{{loginErr}}</p>
+            {{/if}}
+                <div class="form-group">
+                    <label for="email">Email Id </label>
+                    <input type="email" class="form-control" name="username" id="email"
+                        placeholder="Enter your email id">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password </label>
+                    <input type="password" class="form-control" name="password" id="password"
+                        placeholder="Enter Your Password">
+                </div>
+                <div class="form-group">
+                    New user? Register <a href="/signup">here</a>
+                    <input type="submit" value="Login" class="btn btn-info btn-block">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<style>
+
+    
+    .background {
+        background-color: #c72f2f;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-top: 50px;
+        margin-bottom: 50px;
+        margin-left: 200px;
+        margin-right: 200px;
+
+    }
+    .body{
+        background-color: #b11010;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-top: 50px;
+        margin-bottom: 50px;
+        margin-left: 200px;
+        margin-right: 200px;
+
+    }
+    .error {
+        color: red;
+    }
+
+    .success {
+        color: green;
+    }
+
+    .form-group {
+        margin-bottom: 10px;
+
+    }
+
+    .form-control {
+        border-radius: 0;
+    }
+
+    .btn {
+        border-radius: 0;
+
+    }
+
+    .btn-block {
+        border-radius: 0;
+    }
+
+    .btn-info {
+        border-radius: 0;
+    }
+
+    .btn-info:hover {
+        border-radius: 0;
+    }
+
+    .btn-info:active {
+        border-radius: 0;
+    }
+
+    .btn-info:focus {
+        border-radius: 0;
+    }
+
+    .btn-info:active:focus {
+        border-radius: 0;
+    }
+
+    .btn-info:active:hover {
+        border-radius: 0;
+    }
+
+
+
+</style>

@@ -1,0 +1,37 @@
+<section>
+  <div class="container">
+    <div class="row mt-4">
+       <h2>All Order</h2>
+    </div>
+    <table class="table table-bordered mt-5">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Date</th>
+          <th scope="col">Amount</th>
+          <th scope="col">Payment</th>
+          <th scope="col">Quantity</th>
+         <th scope="col">Status</th>
+        </tr>
+      </thead>
+    <tbody>
+        {{#each orders}}
+         <tr>
+          <td>{{this.productName}}</td>
+          <td>{{this.date}}</td>
+          <td>{{this.totalAmount}}</td>
+          <td>{{this.paymentMethod}}</td>
+          <td>{{this.quantity}}</td>
+          <td>{{this.status}}</td>
+
+          <td>
+            <a href="/view-order-products/{{this._id}}" class="btn btn-primary">View Products</a>
+            <a href="/cancel-order/{{this._id}}" class="btn btn-primary">Cancel</a>
+
+          </td>
+        </tr>
+        {{/each}}
+    </tbody>
+    </table>
+  </div>
+</section>

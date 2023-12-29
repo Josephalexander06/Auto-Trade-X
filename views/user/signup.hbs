@@ -1,0 +1,28 @@
+<div class="row">
+    <div class="col-md-5 m-auto">
+        <div class=" container mt-4 pl-5">
+            <h2 class="text-center">Signup</h2>
+            <form method="post" id="registration" action="/signup">
+                <div class="form-group">
+                    <label for="fname">Enter Name </label>
+                    <input type="text" class="form-control" id="fname" name="fname" placeholder="Enter Your Name"
+                        value="{{fname}}">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Id </label>
+                    <input type="text" class="form-control" name="email" id="email" placeholder="Enter your email id"
+                        value="{{email}}">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" name="password" placeholder="Enter Your Password">
+                </div>
+                <div class="form-group">
+                    Already user? Login <a href="/login">here</a>
+                    <button type="submit" class="btn btn-primary float-right">Register</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
