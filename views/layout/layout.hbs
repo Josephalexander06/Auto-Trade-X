@@ -14,11 +14,15 @@
 </head>
 
 <body>
-    {{#if admin}}
-   {{>admin-header}}
+{{#if admin}}
+   {{> admin-header}}
+{{else}}
+   {{#if client}}
+      {{> client-header}}
    {{else}}
-   {{>user-header}}
+         {{> user-header}}
    {{/if}}
+{{/if}}
    
    {{{body}}}
 

@@ -1,10 +1,35 @@
-<section class="d-flex justify-content-center ">
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <form action="/order-place" method="post" class="text-center">
-                <h2>Order Placed Successfully</h2>
-                <a href="/orders" class="btn btn-info mt-3">View Orders</a>
-            </form>
-        </div>
+<head>
+     <link rel="stylesheet" href="/stylesheets/order-place.css">
+
+</head>
+<section>
+    <div class="alert-popup-container">
+  <div class="success-checkmark">
+    <div class="check-icon">
+      <span class="icon-line line-tip"></span>
+      <span class="icon-line line-long"></span>
+      <div class="icon-circle"></div>
+      <div class="icon-fix"></div>
     </div>
+  </div>
+  <div class="alert-popup-title">Success!!!</div>
+  <div class="alert-popup-message">
+    Order Placed Successfully 
+  </div>
+  <div class="alert-popup-confirm">
+  <a href="/orders" class="btn btn-info mt-3" id="button">View Orders</a>
+
+  </div>
+</div>
+
 </section>
+<script>
+    $("button").click(function() {
+  $(".check-icon").hide();
+  setTimeout(function() {
+    $(".check-icon").show();
+  }, 10);
+});
+
+</script>
+
