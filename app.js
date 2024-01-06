@@ -10,6 +10,7 @@ var session= require('express-session')
 
 var userRouter = require('./routes/user');
 var adminRouter = require('./routes/admin');
+var clientRouter = require('./routes/client')
 
 var app = express();
 
@@ -32,6 +33,7 @@ db.connect()
 
 app.use('/', userRouter);
 app.use('/admin', adminRouter);
+app.use('/client',clientRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

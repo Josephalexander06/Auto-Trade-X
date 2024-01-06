@@ -7,9 +7,10 @@
       <thead>
         <tr>
           <th scope="col">No</th>
-          <th scope="col">Title</th>
-          <th scope="col">Category</th>
-          <th scope="col">Description</th>
+          <th scope="col">Name</th>
+          <th scope="col">Original-Price</th>
+          <th scope="col">Selling-Price</th>
+          <th scope="col">Discount-Precentage</th>
           <th>image</th>
         </tr>
       </thead>
@@ -18,8 +19,9 @@
         <tr>
           <th scope="row">1</th>
           <td>{{this.productName}}</td>
-          <td>{{this.productCategory}}</td>
-          <td>{{this.productDescription}}</td>
+          <td>{{this.originalPrice}}</td>
+          <td>{{this.sellingPrice}}</td>
+          <td>{{this.discountPrecentage}}</td>
           <td><img src="/product-images/{{this._id}}.jpg" style="height: 50px;width:50px" alt=""></td>
           <td>
             <a href="/admin/edit-product/{{this._id}}" class="btn btn-primary">Edit</a>

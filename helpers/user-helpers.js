@@ -41,11 +41,17 @@ module.exports = {
             }
         });
     },
-    addTocart:(productId,userId)=>{
-        let proObj={
-            item:ObjectID(productId),
-            quantity:1
-        }
+    
+    addTocart: async (productId, userId) => {
+        let product = await db.get().collection(collection.PRODUCT_COLLECTION).findOne({ _id: ObjectID(productId) });
+        let proObj = {
+            item: ObjectID(productId),
+            quantity: 1,
+            name: product.productName,  // Add product name to cart
+            productId: product._id, // Add product ID to cart
+            sellingAmount:product.sellingPrice,//Add Selling Amount
+        };
+       
         return new Promise(async(resolve,reject)=>{
             let userCart=await db.get().collection(collection.CART_COLLECTION).findOne({user:ObjectID(userId)})
             if(userCart){
@@ -76,7 +82,8 @@ module.exports = {
                 })
             }
         })
-    },
+    }
+  ,
     getCartProduct: (userId) => {
         return new Promise(async (resolve, reject) => {
             let cartItems = await db.get().collection(collection.CART_COLLECTION).aggregate([
@@ -128,7 +135,6 @@ module.exports = {
         })
     },
     changeProductQuantity:(details)=>{
-        console.log(details)
         details.count=parseInt(details.count)
         details.quantity=parseInt(details.quantity)
         return new Promise((resolve,reject)=>{
@@ -202,60 +208,130 @@ module.exports = {
                         product: { $arrayElemAt: ['$product', 0] }
                     }
                 },
-            {
+                {
                 $group:{
                     _id:null,
                     total: {
                         $sum: {
                             $multiply: [
                                 { $toDouble: '$quantity' },
-                                { $toDouble: '$product.productPrice' }
+                                { $toDouble: '$product.sellingPrice' }
                             ]
                         }
                     }
-                }
-            }
-            
+                } 
+            },
             ]).toArray();
-            console.log(total[0].total)
             resolve(total[0].total);
         });
     },
-    placeOrder:(order,products,total)=>{
-        return new Promise((resolve,reject)=>{
-            console.log(order,products,total)
-            let status = order['payment-method']==="COD"?'placed':'pending'
-            let orderObj={
-                deliveryDetails:{
-                    mobile:order.mobile,
-                    address:order.address,
-                    city:order.city,
-                    zipcode:order.zipCode
-                },
-                userId:ObjectID(order.userId),
-                paymentMethod:order['payment-method'],
-                products:products,
-                totalAmount:total,
-                status:status,
-                date:new Date()
+
+    getTotalQuantity: (userId) => {
+        return new Promise(async (resolve, reject) => {
+          let total = await db.get().collection(collection.CART_COLLECTION).aggregate([
+            {
+              $match: {
+                user: ObjectID(userId),
+              }
+            },
+            {
+              $unwind: '$products'
+            },
+            {
+              $group: {
+                _id: null,
+                totalQuantity: {
+                  $sum: { $toInt: '$products.quantity' }
+                }
+              }
             }
-            db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response)=>{
-               db.get().collection(collection.CART_COLLECTION).removeOne({user:ObjectID(order.userId)})
-                resolve(response.ops[0]._id)
-            })
-        })
-    },
-    getCartProductList:(userId)=>{
-        return new Promise(async(resolve,reject)=>{
-            let cart= await db.get().collection(collection.CART_COLLECTION).findOne({user:ObjectID(userId)})
-             resolve(cart.products)
-        })
-    },
-    getuserOrder:(userId)=>{
+          ]).toArray();
+        //   console.log(total[0].totalQuantity)
+          resolve(total[0].totalQuantity);
+        });
+      },
+      generateReceiptId:()=> {
+        // Generate a random receipt ID
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        const length = 15;
+        let receiptId = '';
+      
+        for (let i = 0; i < length; i++) {
+          const randomIndex = Math.floor(Math.random() * characters.length);
+          receiptId += characters.charAt(randomIndex);
+        }
+      
+        return receiptId;
+      },
+      
+      placeOrder: (order, products, total, receiptId) => {
+        return new Promise(async (resolve, reject) => {
+             console.log(order, products, total);
+            let status = order['payment-method'] === "COD" ? 'placed' : 'pending';
+    
+            let orderObj = {
+                deliveryDetails: {
+                    mobile: order.mobile,
+                    address: order.address,
+                    city: order.city,
+                    zipcode: order.zipCode
+                },
+                userId: ObjectID(order.userId),
+                paymentMethod: order['payment-method'],
+
+                products: products.map((product) => ({
+                    name: product.name,
+                    productId:product.productId || null,
+                    quantity: product.quantity,
+                    sellingAmount: product.sellingAmount,
+                    date: new Date(),
+                    receiptId: receiptId,
+                    // totalAmount: total,
+                })),
+                status: status,
+            };
+    
+            try {
+                let response = await db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj);
+                await db.get().collection(collection.CART_COLLECTION).removeOne({ user: ObjectID(order.userId) });
+                // console.log(response.ops[0]._id);
+                resolve(response.ops[0]._id);
+            } catch (error) {
+                console.error(error);
+                reject(error);
+            }
+        });
+    }
+    
+    ,
+
+    // Example of adding a product to the cart and then fetching the updated cart
+ addProductToCartAndFetch:(userId, productId) =>{
+     return new Promise(async (resolve, reject) => {
+        try {
+            await addToCart(userId, productId); // Assume you have a function for adding to the cart
+            const cartProducts = await getCartProductList(userId);
+            // console.log("Updated Cart:", cartProducts);
+            resolve(cartProducts);
+        } catch (error) {
+            console.error(error);
+            reject(error);
+        }
+    })
+},
+
+getCartProductList:(userId)=>{
+    return new Promise(async(resolve,reject)=>{
+        let cart= await db.get().collection(collection.CART_COLLECTION).findOne({user:ObjectID(userId)})
+        console.log(cart.products)
+         resolve(cart.products)
+    })
+}, 
+getUserOrder:(userId)=>{
         return new Promise(async(resolve,reject)=>{
             let orders= await db.get().collection(collection.ORDER_COLLECTION)
             .find({userId:ObjectID(userId)}).toArray();
-            // console.log(orders)
+              console.log("Ordersss"+orders)
             resolve(orders)  
         })
     },
@@ -284,6 +360,7 @@ module.exports = {
                     }
                 }
             ]).toArray()
+            resolve(orderItems)
         })
     },
     cancelOrder:(orderId)=>{
@@ -310,7 +387,7 @@ module.exports = {
                 if(err){
                     console.log(err)
                 }else{
-                console.log(order);
+                // console.log(order);
                 resolve(order);
                 }
               });
