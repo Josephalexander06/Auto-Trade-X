@@ -3,6 +3,8 @@
 }
 .container {
     margin-top: 20px;
+    border-radius: 0 0 0 0;
+    background: linear-gradient(#FFFFFF, #FFFFFF);
 }
 
 .card {
@@ -58,13 +60,134 @@
     margin-bottom: 1rem;
 }
 
-.row {
+/* .row {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-}
+    --aspect-ratio: 1/1;
+    --aspect-ratio-m: 1/1;
+    --aspect-ratio-l: 1/1;
+    flex: 1 1 0%;
+    overflow: hidden;
+    border-radius: 2px;
+} */
 
 section {
     background-color: #f8f9fa;
     padding: 30px 0;
 }
+.carousal1{
+    margin-top: 38px;
+}
+li{
+    list-style: none;
+}
+
+#footer{
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 18px;
+    padding-top: 18px;
+}
+
+.heading{
+    color: gray;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+}
+
+a{
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: none;
+}
+.product-card{
+    width: 270px;
+    background: white;
+    margin: 80px auto;
+    box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.front-image{
+    background: white;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9;
+    height: 100%;
+    display: block;
+    transition: all 0.4s ease;
+}
+.front-image img{
+    height: 100%;
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.product-front-image:hover .front-image{
+    display: none;
+}
+.product-front-image{
+    overflow: hidden;
+    position: relative;
+    height: 300px;
+    width: 100%;
+}
+.product-details{
+    padding: 10px 15px;
+    position: relative;
+}
+
+.brand-name{
+    color: #878787;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.color-details{
+    color: #878787;
+    font-size: 12px;
+}
+.price-info-sec{
+    display: flex;
+}
+.price-info-sec div{
+    margin: 0px 5px 0px 0px;
+}
+
+.price-info-sec .price{
+    font-size: 16px;
+    font-weight: 500;
+    color: #212121;
+}
+
+.price-info-sec .cut-off{
+    font-size: 15px;
+    font-weight: 400;
+    color:#878787;
+    text-decoration: line-through;
+}
+
+.price-info-sec .discount-percent span{
+    font-size: 13px;
+    font-weight: 600;
+    color: #388e3c;
+    letter-spacing: -.2px;
+    display: inline-block;
+}
+

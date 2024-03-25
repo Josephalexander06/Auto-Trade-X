@@ -1,65 +1,114 @@
-<section>
-    <div class="container mt-5">
-        <form action="" method="post" id="checkout-form">
-            <div class="row">
+<!DOCTYPE html>
+<html lang="en">
 
-                <div class="col-md-6">
-                    <h2>Enter delivery Details</h2>
-                    <div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Checkout</title>
+    <!-- Include necessary CSS files -->
+    <link rel="stylesheet" href="/stylesheets/place-order.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        integrity="sha512-7k+tcyLVhSgRuCkb7F5HaFL4kO3BCjdj+YoWBnRcSi+2w80Rz4z1kUPROF9ih2gb/fvC2lGJcVcWUrHdNUK4ng=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Include your custom CSS file if any -->
+</head>
 
-                        <label for="address">Address:</label>
-                        <textarea id="address" name="address"></textarea>
+<body>
 
-                        <label for="city">City:</label>
-                        <input type="text" id="city" name="city">
-
-                        <label for="mobile">Mobile:</label>
-                        <input type="text" id="mobile" name="mobile">
-
-                        <label for="zipCode">Zip Code:</label>
-                        <input type="text" id="zipCode" name="zipCode">
-
-                        <input type="text" name="userId" id="" value="{{user._id}}" hidden>
-                    </div>
+    <section>
+        <div class="row mt-3 mx-3" style="margin-top: 25px;">
+            <div class="col-md-3">
+                <div style="margin-top: 50px; margin-left: 10px;" class="text-center">
+                    <i id="animationDemo" data-mdb-animation="slide-right" data-mdb-toggle="animation"
+                        data-mdb-animation-reset="true" data-mdb-animation-start="onScroll"
+                        data-mdb-animation-on-scroll="repeat" class="fas fa-3x fa-shipping-fast text-black"></i>
+                    <h3 class="mt-3 text-black">Welcome</h3>
+                    <p class="white-text">You are 30 seconds away from completing your order!</p>
                 </div>
-                <div class="col-md-4">
-                    <div class="container mt-5 ml-5 checkout">
-
-                        <h3>Total Amount :Rs.{{total}}</h3>
-                        <hr>
-                        <div class="payment">
-                            <p>Payment Method</p>
-                            <label class="radio-inline">
-                                <input type="radio" name="payment-method" value="COD"> checked-COD
-                            </label>
-
-                            <label class="radio-inline mt-2">
-                                <input type="radio" name="payment-method" value="Online"> Online payment
-                            </label>
-
-                            <button class="btn btn-success" id="rzp-button1" type="submit">Confirm Order</button>
+                <div class="text-center">
+                    <button type="button" class="btn btn-white btn-rounded back-button">Go back</button>
+                </div>
+            </div>
+            <div class="col-md-9 justify-content-center">
+                <div class="card card-custom pb-4">
+                    <div class="card-body mt-0 mx-5">
+                        <div class="text-center mb-3 pb-2 mt-3">
+                            <h4 style="color: #495057;">Delivery Details</h4>
                         </div>
+
+                        <form class="mb-0" action="" method="post" id="checkout-form">
+
+                            <div class="row mb-4">
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <input type="textarea" id="address" name="address"
+                                            class="form-control input-custom" />
+                                        <label class="form-label" for="address">Address</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <input type="text" id="city" name="city" class="form-control input-custom" />
+                                        <label class="form-label" for="city">City</label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <input type="text" id="zipCode" name="zipCode"
+                                            class="form-control input-custom" />
+                                        <label class="form-label" for="zipCode">Zip</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <input type="text" id="mobile" name="mobile"
+                                            class="form-control input-custom" />
+                                        <label class="form-label" for="mobile">Mobile Number</label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <input type="hidden" name="userId" value="{{user._id}}" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="payment">
+                                <!-- Submit button -->
+                                <button type="submit" class="btn btn-primary btn-rounded" id="rzp-button1"
+                                    style="background-color: #0062CC;">Place order</button>
+                            </div>
+
+                        </form>
                     </div>
                 </div>
             </div>
-        </form>
+        </div>
+    </section>
 
-    </div>
-</section>
-
+    <!-- Include necessary JavaScript files -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <!-- Include your custom JavaScript file if any -->
 <script>
     $(document).ready(function () {
         $("#checkout-form").submit((e) => {
+            console.log("Razor")
             e.preventDefault();
             $.ajax({
                 url: '/place-order',
-                type: 'POST', // Specify the request method
-                data: $('#checkout-form').serialize(), // Add parentheses to serialize
+                type: 'POST',
+                data: $('#checkout-form').serialize(),
                 success: (response) => {
                     if (response.cod_Success) {
-                        location.href = '/order-place'
+                        location.href = '/order-place';
                     } else {
-                        razorpayPayment(response)
+                        // If cash on delivery is not successful, initiate Razorpay payment
+                        razorpayPayment(response);
                     }
                 },
                 error: (error) => {
@@ -67,125 +116,66 @@
                 }
             });
         });
-    });
-
-    function razorpayPayment(order) {
-        var options = {
-            "key": 'rzp_test_xxcqlCHlsEvoWt', // Enter the Key ID generated from the Dashboard
-            "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-            "currency": "INR",
-            "name": "Auto Trade X", //your business name
-            "description": "Test Transaction",
-            "image": "https://example.com/your_logo",
-            "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-            "handler": function (response) {
-
-                verifyPayment(response, order)
-            },
-            "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
-                "name": "Gaurav Kumar", //your customer's name
-                "email": "gaurav.kumar@example.com",
-                "contact": "9000090000"  //Provide the customer's phone number for better conversion rates 
-            },
-            "notes": {
-                "address": "Razorpay Corporate Office"
-            },
-            "theme": {
-                "color": "#3399cc"
-            }
-        };
-        var rzp1 = new Razorpay(options);
-rzp1.on('payment.failed', function (response){
-        alert(response.error.code);
-        alert(response.error.description);
-        alert(response.error.source);
-        alert(response.error.step);
-        alert(response.error.reason);
-        alert(response.error.metadata.order_id);
-        alert(response.error.metadata.payment_id);
-});
-document.getElementById('rzp-button1').onclick = function(e){
-    rzp1.open();
-    e.preventDefault();
-}
-    }
-    function verifyPayment(payment, order) {
-        $.ajax({
-            url: '/verify-payment',
-            data: {
-                payment,
-                order,
-            },
-            method: 'POST',
-            success:(response)=>{
-                if(response.status){
-                    location.href = '/order-place'
-                }else{
-                    alert("Payment Failed")
+        
+        // Function to handle Razorpay payment
+        function razorpayPayment(order) {
+            var options = {
+                "key": 'rzp_test_xxcqlCHlsEvoWt', // Your Razorpay API key
+                "amount": order.amount, // Amount is in currency subunits
+                "currency": "INR",
+                "name": "Auto Trade X", // Your business name
+                "description": "Test Transaction",
+                "order_id": order.id, // Razorpay order ID
+                "handler": function (response) {
+                    verifyPayment(response, order);
+                },
+                "prefill": {
+                    "name": "Gaurav Kumar", // Customer's name
+                    "email": "gaurav.kumar@example.com",
+                    "contact": "9000090000" // Customer's phone number
+                },
+                "notes": {
+                    "address": "Razorpay Corporate Office"
+                },
+                "theme": {
+                    "color": "#3399cc"
                 }
+            };
+            var rzp1 = new Razorpay(options);
+            rzp1.open();
+        }
+        
+        // Function to verify payment
+        // Function to verify payment
+// Function to verify payment
+function verifyPayment(payment, order) {
+    $.ajax({
+        url: '/verify-payment',
+        data: {
+            payment,
+            order,
+        },
+        method: 'POST',
+        success: (response) => {
+            if (response.status === 'success') {
+                // Payment is successful
+                location.href = '/order-place';
+            } else {
+                // Payment failed
+                alert("Payment Failed: " + response.error);
             }
-        })
-    }
+        },
+        error: (error) => {
+            console.error("Error verifying payment:", error);
+            alert("Error verifying payment");
+        }
+    });
+}
 
+
+    });
 </script>
 
+</body>
 
-<style>
-    body {
-        font-family: 'Arial', sans-serif;
-        background-color: #f5f5f5;
-    }
-
-    section {
-        margin-top: 50px;
-    }
-
-    .container {
-        max-width: 800px;
-        margin: 0 auto;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    form {
-        display: flex;
-        flex-direction: column;
-    }
-
-    h2 {
-        color: #333;
-    }
-
-    label {
-        margin-top: 10px;
-        color: #555;
-    }
-
-    input,
-    textarea {
-        width: 100%;
-        padding: 8px;
-        margin-top: 5px;
-        box-sizing: border-box;
-    }
-
-    button {
-        background-color: #4caf50;
-        color: #fff;
-        padding: 10px;
-        border: none;
-        border-radius: 3px;
-        cursor: pointer;
-        margin-top: 10px;
-    }
-
-    hr {
-        border: 1px solid #ddd;
-    }
-
-    .payment {
-        margin-top: 20px;
-    }
-</style>
+</html>

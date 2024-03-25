@@ -1,0 +1,48 @@
+/* Add your custom styles here */
+
+body {
+  background-color: #f8f9fa; /* Light gray background color */
+}
+
+.container {
+  margin-top: 20px;
+}
+
+.card {
+  border: 1px solid #dee2e6; /* Light gray border for cards */
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.card-title {
+  font-size: 1.25rem; /* Larger font size for card titles */
+  margin-bottom: 10px;
+}
+
+.list-unstyled {
+  list-style: none; /* Remove default list styles */
+  padding: 0;
+  float:left;
+}
+
+.product-box {
+  margin-top: 15px; /* Margin between product boxes */
+}
+
+/* Customize layout for different screen sizes */
+@media (min-width: 768px) {
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .col-md-6 {
+    flex: 0 0 50%; /* 50% width for medium-sized screens and larger */
+  }
+  
+  .img-fluid {
+    max-width: 100%; /* Make images responsive */
+  }
+}

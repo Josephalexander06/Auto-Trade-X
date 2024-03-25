@@ -1,0 +1,152 @@
+<head>
+    <link rel="stylesheet" href="/stylesheets/add-product.css">
+</head>
+
+
+
+<section>
+    <div class="container mt-5">
+        <!-- add-product.hbs -->
+
+        <section style="background-color: blue;">
+            <div class="container mt-5">
+                <!-- add-product.hbs -->
+                <section>
+                    <div class="container" style="color: black;">
+                        <form action="/seller/add-product" method="post" enctype="multipart/form-data"
+                            id="addProductForm">
+                            <div class="row">
+                                <!-- Left Side Column -->
+                                <div class="col">
+                                    <!-- Product Name -->
+                                    <label for="vehicleName">Select Vehicle Name:</label>
+                                    <select id="vehicleName" name="vehicleName" required>
+                                        <option value="" disabled selected>Select Vehicle</option>
+                                        {{#each vehicleNames}}
+                                        <option value="{{this}}">{{this}}</option>
+                                        {{/each}}
+                                    </select>
+
+                                    <label for="year">Year:</label>
+                                    <input type="number" id="year" name="year" min="1900" max="2024" required>
+
+                                    <label for="color">Color:</label>
+                                    <input type="text" id="color" name="color" required>
+
+                                    <label for="mileage">Mileage (in miles):</label>
+                                    <input type="number" id="mileage" name="mileage" min="0" required>
+
+                                    <label for="price">Price:</label>
+                                    <input type="number" id="price" name="price" min="0" required>
+
+                                    <label for="BookingAmount">Booking Amount:</label>
+                                    <input type="number" id="BookingAmount" name="BookingAmount" min="0" required>
+
+                                    <label for="Discount">Discount Percentage:</label>
+                                    <input type="number" id="Discount" name="Discount" min="0" required>
+
+                                    <label for="engine">Engine:</label>
+                                    <input type="text" id="engine" name="engine" required>
+                                </div>
+
+                                <!-- Right Side Column -->
+                                <div class="col">
+                                    <!-- ... Other right side inputs ... -->
+                                    <label for="description">Description:</label>
+                                    <textarea id="description" name="description" rows="4" required></textarea>
+
+                                    <label for="transmission">Transmission:</label>
+                                    <select id="transmission" name="transmission" required>
+                                        <option value="none">None</option>
+                                        <option value="automatic">Automatic</option>
+                                        <option value="manual">Manual</option>
+                                    </select>
+
+                                    <label for="fuelType">Fuel Type:</label>
+                                    <select id="fuelType" name="fuelType" required>
+                                        <option value="none">None</option>
+                                        <option value="gasoline">Gasoline</option>
+                                        <option value="diesel">Petrol</option>
+                                        <option value="diesel">Diesel</option>
+                                        <option value="electric">Electric</option>
+                                        <!-- Add more options as needed -->
+                                    </select>
+
+                                    <label for="numDoors">Number of Doors:</label>
+                                    <input type="number" id="numDoors" name="numDoors" min="2" max="6" required>
+
+                                    <label for="numSeats">Number of Seats:</label>
+                                    <input type="number" id="numSeats" name="numSeats" min="2" max="10" required>
+
+                                    <label for="features">Features (comma-separated):</label>
+                                    <input type="text" id="features" name="features">
+
+                                    <!-- Image Upload Form -->
+                                    <label for="frontImage">Front Image:</label>
+                                    <input type="file" id="frontImage" name="frontImage" accept="image/*" required>
+
+                                    <label for="backImage">Additional Images:</label>
+                                    <input type="file" id="backImage" name="backImage"
+                                        accept="image/*" multiple>
+                                        
+                                    <div id="additionalImagesContainer"></div>
+
+                                    {{#if seller}}
+                                    <input type="hidden" id="seller" name="seller" value="{{seller._id}}">
+                                    {{/if}}
+
+                                     <input type="hidden" id="quantity" name="quantity" value="0">
+<br>
+                                    <button type="submit" class="btn btn-success">Add Vehicle</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </section>
+    </div>
+</section>
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script>
+   // Add this code to update vehicle names dynamically
+$(document).ready(function () {
+    updateVehicleNames();
+
+    // Update vehicle names when the form is submitted
+    $('#addProductForm').submit(function () {
+        updateVehicleNames();
+    });
+    
+    // Function to update vehicle names
+    function updateVehicleNames() {
+        $.get('/api/getVehicleNames', function (data) {
+            $('#vehicleName').empty();
+            $('#vehicleName').append('<option value="" disabled selected>Select Vehicle</option>');
+            data.vehicleNames.forEach(function (vehicle) {
+                $('#vehicleName').append('<option value="' + vehicle + '">' + vehicle + '</option>');
+            });
+        });
+    }
+
+    // Rest of your existing code for additional image handling
+    $('.additionalImage').on('change', function () {
+        // Display selected additional images in addition to existing ones
+        for (let i = 0; i < this.files.length; i++) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                $('#additionalImagesContainer').append('<img src="' + e.target.result + '" alt="Additional Image">');
+            };
+            reader.readAsDataURL(this.files[i]);
+        }
+    });
+});
+
+</script>

@@ -1,0 +1,194 @@
+{{!-- <section>
+  <div class="container mt-4">
+    <div class="row">
+
+      <!-- Add Product Form -->
+      <h2 class="text-center">Edit Product</h2>
+      <form action="/seller/edit-product/{{product._id}}" method="post" enctype="multipart/form-data">
+
+        <br><br>
+
+        <label for="productName">Product Name:</label>
+        <input type="text" class="form-control" id="productName" name="productName" value="{{product.productName}}"
+          required>
+
+        <label for="originalPrice">Original-Price:</label>
+        <input type="text" class="form-control" id="originalPrice" name="originalPrice"
+          value="{{product.originalPrice}}" required>
+
+        <label for="sellingPrice">Selling-Price</label>
+        <input type="text" class="form-control" id="sellingPrice" name="sellingPrice" value="{{product.sellingPrice}}">
+        <br>
+
+        <label for="discountPrecentage">Discount-Precentage:</label>
+        <input type="text" class="form-control" id="DiscountPrecentage" name="discountPrecentage"
+          value="{{product.discountPrecentage}}" required>
+
+        <label for="productImage">Image:</label>
+        <img src="/product-Images/{{product._id}}.jpg" alt="" style="width: 100px; height:auto " id="imgView"
+          class="pt-3">
+
+        <input type="file" class="form-control" id="productImage" name="Image" onchange="viewimage(event)">
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+</section>
+<script>
+  function viewimage(event) {
+    document.getElementById('imgView').src = URL.createObjectURL(event.target.files[0])
+  }
+</script> --}}
+
+<head>
+  <link rel="stylesheet" href="/stylesheets/add-product.css">
+</head>
+
+
+
+<section>
+  <div class="container mt-5">
+    <!-- add-product.hbs -->
+
+    <section style="background-color: blue;">
+      <div class="container mt-5">
+        <!-- add-product.hbs -->
+        <h2>Edit Product</h2>
+        <section>
+          <div class="container" style="color: black;">
+            <form action="/seller/edit-product/{{product._id}}" method="post" enctype="multipart/form-data"
+              id="addProductForm">
+              <div class="row">
+                <!-- Left Side Column -->
+                <div class="col">
+
+                  <label for="year">Year:</label>
+                  <input type="number" id="year" name="year" min="1900" max="2024" value="{{product.year}}" required>
+
+                  <label for="color">Color:</label>
+                  <input type="text" id="color" name="color" value="{{product.color}}" required>
+
+                  <label for="mileage">Mileage (in miles):</label>
+                  <input type="number" id="mileage" name="mileage" min="0" value="{{product.mileage}}" required>
+
+                  <label for="price">Price:</label>
+                  <input type="number" id="price" name="price" min="0" value="{{product.price}}" required>
+
+                  <label for="BookingAmount">Booking Amount:</label>
+                  <input type="number" id="BookingAmount" name="BookingAmount" min="0" value="{{product.BookingAmount}}"
+                    required>
+
+                  <label for="Discount">Discount Percentage:</label>
+                  <input type="number" id="Discount" name="Discount" min="0" value="{{product.Discount}}" required>
+
+                  <label for="engine">Engine:</label>
+                  <input type="text" id="engine" name="engine" value="{{product.engine}}" required>
+                </div>
+
+                <!-- Right Side Column -->
+                <div class="col">
+                  <!-- ... Other right side inputs ... -->
+                  <label for="description">Description:</label>
+                  <textarea id="description" name="description" rows="4" required>{{product.description}}</textarea>
+
+                  <label for="transmission">Transmission: {{product.transmission}}</label>
+                  <select id="transmission" name="transmission" required>
+                    <option value="none">None</option>
+                    <option value="automatic">Automatic</option>
+                    <option value="manual">Manual</option>
+                  </select>
+
+                  <label for="fuelType">Fuel Type: {{product.fuelType}}</label>
+                  <select id="fuelType" name="fuelType" required>
+                    <option value="none">None</option>
+                    <option value="gasoline">Gasoline</option>
+                    <option value="diesel">Petrol</option>
+                    <option value="diesel">Diesel</option>
+                    <option value="electric">Electric</option>
+                    <!-- Add more options as needed -->
+                  </select>
+
+                  <label for="numDoors">Number of Doors:</label>
+                  <input type="number" id="numDoors" name="numDoors" min="2" max="6" value="{{product.numDoors}}"
+                    required>
+
+                  <label for="numSeats">Number of Seats:</label>
+                  <input type="number" id="numSeats" name="numSeats" min="2" max="10" value="{{product.numSeats}}"
+                    required>
+
+                  <label for="features">Features (comma-separated):</label>
+                  <input type="text" id="features" name="features" value="{{product.features}}">
+
+                  <!-- Image Upload Form -->
+                  <label for="frontImage">Front Image:</label>
+                  <img src="/product-images/{{product._id}}-front.jpg" alt="" style="width: 100px; height:auto "
+                    id="imgView" class="pt-3">
+                  <input type="file" id="frontImage" name="frontImage" onchange="viewimage(event)" >
+
+                  <label for="backImage">Additional Images:</label>
+                  <img src="/product-Images/{{product._id}}-back.jpg" alt="" style="width: 100px; height:auto "
+                    id="imgView" class="pt-3">
+                  <input type="file" class="form-control" id="productImage" name="Image" onchange="viewimage(event)">
+
+
+                  <div id="additionalImagesContainer"></div>
+                  <br>
+                  <button type="submit" class="btn btn-success">Edit Vehicle</button>
+                </div>
+              </div>
+
+            </form>
+          </div>
+        </section>
+      </div>
+    </section>
+  </div>
+</section>
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+  function viewimage(event) {
+    document.getElementById('imgView').src = URL.createObjectURL(event.target.files[0])
+  }
+</script>
+
+<script>
+  // Add this code to update vehicle names dynamically
+  $(document).ready(function () {
+    updateVehicleNames();
+
+    // Update vehicle names when the form is submitted
+    $('#addProductForm').submit(function () {
+      updateVehicleNames();
+    });
+
+    // Function to update vehicle names
+    function updateVehicleNames() {
+      $.get('/api/getVehicleNames', function (data) {
+        $('#vehicleName').empty();
+        $('#vehicleName').append('<option value="" disabled selected>Select Vehicle</option>');
+        data.vehicleNames.forEach(function (vehicle) {
+          $('#vehicleName').append('<option value="' + vehicle + '">' + vehicle + '</option>');
+        });
+      });
+    }
+
+    // Rest of your existing code for additional image handling
+    $('.additionalImage').on('change', function () {
+      // Display selected additional images in addition to existing ones
+      for (let i = 0; i < this.files.length; i++) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          $('#additionalImagesContainer').append('<img src="' + e.target.result + '" alt="Additional Image">');
+        };
+        reader.readAsDataURL(this.files[i]);
+      }
+    });
+  });
+
+</script>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Products</title>
+    <link rel="stylesheet" href="/stylesheets/search.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <!-- Filters Section -->
+            <div class="col-md-3">
+                <div class="bg-white rounded p-3 mb-3">
+                    <h4>Vehicle Filters</h4>
+                    <hr>
+                    <form id="filterForm">
+                        <!-- Your filter form content -->
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div id="content" class="my-5">
+                    <!-- Product listing without any filter options -->
+                    <div id="products">
+                        {{#if products.length}}
+                        <div class="row mx-0">
+                            {{#each products}}
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card d-flex flex-column align-items-center">
+                                    <a href="/productdetails/{{this._id}}" class="product-link"
+                                        style="text-decoration: none;">
+                                        <div class="product-name">{{vehicleName}}</div>
+                                        <div class="card-img">
+                                            <img src="/product-images/{{this._id}}-front.jpg" alt="">
+                                        </div>
+                                        <div class="card-body pt-5">
+                                            <div class="text-muted text-center mt-auto">Available Colors</div>
+                                            <div class="d-flex align-items-center justify-content-center colors my-2">
+                                                <div class="btn-group" data-toggle="buttons" data-tooltip="tooltip"
+                                                    data-placement="right" title="choose color">{{color}}</div>
+                                            </div>
+                                            <div class="d-flex align-items-center price">
+                                                <div class="font-weight-bold" style="margin-left: 52px;">₹ {{price}}</div>
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                    <button class="btn btn-primary compare-btn" data-product-id="{{this._id}}">
+                                        Add to Compare
+                                    </button>
+                                </div>
+                            </div>
+                            {{/each}}
+                        </div>
+                        {{else}}
+                        <div class="alert alert-info mt-3" role="alert">
+                            No products available.
+                        </div>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var comparisonList = [];
+
+            // Add an event listener to the compare button
+            $('.compare-btn').click(function () {
+                var productId = $(this).data('product-id');
+
+                // Check if the product is already in the comparison list
+                if (!comparisonList.includes(productId)) {
+                    // Add the product to the comparison list
+                    comparisonList.push(productId);
+
+                    // Update UI to show product is selected for comparison
+                    $(this).text('Added to Compare').prop('disabled', true);
+
+                    // If two products are selected, redirect to the comparison page
+                    if (comparisonList.length === 2) {
+                        window.location.href = '/compare?products=' + comparisonList.join(',');
+                    }
+
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

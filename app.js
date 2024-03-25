@@ -10,7 +10,7 @@ var session= require('express-session')
 
 var userRouter = require('./routes/user');
 var adminRouter = require('./routes/admin');
-var clientRouter = require('./routes/client')
+var sellerRouter = require('./routes/seller')
 
 var app = express();
 
@@ -27,13 +27,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(fileUpload());
 process.env.PWD = process.cwd()
 app.use(express.static(path.join(__dirname, 'public/product-Images')));
+app.use(express.static(path.join(__dirname, 'public/banner-images')));
 app.use(session({secret:"Key",cookie:{maxAge:600000}}))
 
 db.connect()
 
 app.use('/', userRouter);
 app.use('/admin', adminRouter);
-app.use('/client',clientRouter)
+app.use('/seller',sellerRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,0 +1,196 @@
+<section >
+    <div class="container-fluid">
+        <form method="post" id="registrationStep1" action="/seller/sellersignup" onsubmit="return validateForm()">
+            <div class="row">
+                <!-- Left side -->
+                <div class="col-md-6">
+                    <div class="container mt-4 pl-5">
+                        <h2 class="text-center">Seller Signup</h2>
+                        <div class="form-group">
+                            <label for="sname">Enter Name </label>
+                            <input type="text" class="form-control" id="sname"   name="sname" placeholder="Enter Your Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="semail">Email Id </label>
+                            <input type="text" class="form-control" name="semail" id="semail" placeholder="Enter your email id">
+                        </div>
+                        <div class="form-group">
+                            <label for="phoneNumber">Phone Number</label>
+                            <input type="text" class="form-control" name="phoneNumber" id="phoneNumber" placeholder="Enter Your Phone Number">
+                        </div>
+                        <div class="form-group">
+                            <label for="gstNumber">GST Number</label>
+                            <input type="text" class="form-control" id="gstNumber" name="gstNumber" placeholder="Enter Your GST Number">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" name="password" placeholder="Enter Your Password">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right side -->
+                <div class="col-md-6 p-5">
+                    <div class="form-group">
+                        <label for="shopName">Shop Name</label>
+                        <input type="text" class="form-control" id="shopName" name="shopName" placeholder="Enter Your Shop Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="NearBy">NearBy</label>
+                        <input type="text" class="form-control" id="NearBy" name="NearBy" placeholder="Enter Your Shop NearBy"></input>
+                    </div>
+                    <div class="form-group">
+                        <label for="pincode">Pincode</label>
+                        <input type="text" class="form-control" id="pincode" name="pincode" placeholder="Enter Your Pincode">
+                    </div>
+                    <div>
+                        <label for="state">Choose a state:</label>
+                        <select name="state" id="state" class="state-dropdown">
+                            <option value="" selected disabled>Select a state</option>
+                            {{#each States}}
+                            <option value="{{this.stateName}}">{{this.stateName}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div>
+                        <label for="district">Choose a District:</label>
+                        <select name="district" id="district" class="district-dropdown" disabled>
+                            <option value="" selected disabled>Select a state first</option>
+                            {{#each DistrictsByState}}
+                            <option value="{{this.districtName}} ">{{this.districtName}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary float-right" style="margin-right: 76px;">Register</button>
+                </div>
+            </div>
+        </form>
+        <div id="errorMessages">
+        </div>
+    </div>
+</section>
+
+<script>
+    function validateForm() {
+        // Reset error messages
+        var errorMessagesDiv = document.getElementById('errorMessages');
+        errorMessagesDiv.innerHTML = 'Fill The Form ';
+
+        // Get input values
+        var sname = document.getElementById('sname').value;
+        var semail = document.getElementById('semail').value;
+        var phoneNumber = document.getElementById('phoneNumber').value;
+        var gstNumber = document.getElementById('gstNumber').value;
+        var password = document.getElementById('password').value;
+        var shopName = document.getElementById('shopName').value;
+        var NearBy = document.getElementById('NearBy').value;
+        var pincode = document.getElementById('pincode').value;
+        var state = document.getElementById('state').value;
+        var district = document.getElementById('district').value;
+
+        // Email, phone number, GST number, password, and pincode validation regex
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        var phoneRegex = /^[0-9]{10}$/;
+        var gstRegex = /^[0-9]{15}$/; // Adjust the pattern based on GST number format
+        var passwordRegex = /^.{4,}$/; // Minimum 4 characters for the password
+        var pincodeRegex = /^[0-9]{6}$/; // Exactly 6 numbers for the pincode
+
+        // Perform validation and show error messages
+        if (!sname) {
+            showError('sname', 'Please enter your name.');
+        }
+        if (!emailRegex.test(semail)) {
+            showError('semail', 'Please enter a valid email address.');
+        }
+        if (!phoneRegex.test(phoneNumber)) {
+            showError('phoneNumber', 'Please enter a valid phone number.');
+        }
+        if (!gstRegex.test(gstNumber)) {
+            showError('gstNumber', 'Please enter a valid GST number.');
+        }
+        if (!passwordRegex.test(password)) {
+            showError('password', 'Password must be at least 4 characters.');
+        }
+        if (!shopName) {
+            showError('shopName', 'Please enter your shop name.');
+        }
+        if (!NearBy) {
+            showError('NearBy', 'Please enter your shop nearby location.');
+        }
+        if (!pincodeRegex.test(pincode)) {
+            showError('pincode', 'Please enter a valid 6-digit pincode.');
+        }
+        if (!state) {
+            showError('state', 'Please select a state.');
+        }
+        if (!district) {
+            showError('district', 'Please select a district.');
+        }
+
+        // Check if there are any error messages
+        if (errorMessagesDiv.innerHTML !== '') {
+            return false;
+        }
+
+        // If all checks pass, return true to submit the form
+        return true;
+    }
+
+    function showError(elementId, errorMessage) {
+        var errorMessagesDiv = document.getElementById('errorMessages');
+        var errorElement = document.createElement('p');
+        errorElement.className = 'error-message';
+        errorElement.innerHTML = errorMessage;
+
+        // Highlight the input field with an error
+        document.getElementById(elementId).classList.add('is-invalid');
+
+        // Append error message to the error messages div
+        errorMessagesDiv.appendChild(errorElement);
+    }
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const stateDropdown = document.getElementById('state');
+        const districtDropdown = document.getElementById('district');
+
+        stateDropdown.addEventListener('change', function () {
+            const selectedState = stateDropdown.value;
+
+            // Fetch districts for the selected state from your database or API
+            $.ajax({
+                url: `/seller/api/districts/${selectedState}`,
+                method: 'GET',  // Use GET method here
+                success: function (data) {
+                    console.log("Data: ", data);  // Check the data in the console
+                    // Update district dropdown options
+                    updateDistrictDropdown(districtDropdown, data);
+                },
+                error: function (error) {
+                    console.error('Error fetching districts:', error);
+                }
+            });
+
+        });
+    });
+
+    function updateDistrictDropdown(districtDropdown, districts) {
+        // Clear existing options
+        districtDropdown.innerHTML = '<option value="" selected disabled>Select a district</option>';
+
+        // Add new options
+        districts.forEach(function (district) {
+            const option = document.createElement('option');
+            option.value = district.districtName;
+            option.textContent = district.districtName;
+            districtDropdown.appendChild(option);
+        });
+
+        // Enable district dropdown
+        districtDropdown.disabled = false;
+    }
+
+</script>

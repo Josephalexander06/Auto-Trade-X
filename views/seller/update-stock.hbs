@@ -1,0 +1,32 @@
+<!-- update-stock.hbs -->
+
+<html>
+
+<head>
+    <link rel="stylesheet" href="/stylesheets/update-stock.css">
+    <!-- Include any other necessary CSS files or stylesheets -->
+</head>
+
+<body>
+    <div class="update-stock-container">
+        <h1>Update Stock</h1>
+        <!-- Add your form for updating stock here -->
+              <form action="/seller/update-stock" method="POST"> <!-- Adjusted action attribute -->
+            <!-- Dropdown menu for selecting the product -->
+            <label for="productid">Select Product:</label>
+            <select id="productid" name="productid">
+                {{#each products}}
+                    <option value="{{this._id}}">{{this.vehicleName}}</option>
+                {{/each}}
+            </select>
+            <!-- Hidden input field for setting default quantity to 0 -->
+            <input type="text" id="quantity" name="quantity" value="0">
+            <!-- Button to submit the form -->
+            <button type="submit">Update Stock</button>
+        </form>
+
+
+    </div>
+</body>
+
+</html>

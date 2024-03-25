@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin View Users</title>
+  <!-- Add JavaScript to handle confirmation dialogs -->
+  <script>
+    function confirmBlock() {
+      return confirm('Are you sure you want to block this user?');
+    }
+
+    function confirmUnblock() {
+      return confirm('Are you sure you want to unblock this user?');
+    }
+  </script>
+</head>
+
+<body>
+  <section>
+    <div class="container">
+      <div class="row mt-4">
+        <a href="/admin/admin-view" class="btn btn-success">Back</a>
+      </div>
+      <table class="table mt-4">
+        <thead>
+          <tr>
+            <th scope="col">Index</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Block/Unblock</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each users}}
+          <tr>
+            <td>{{@index}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.email}}</td>
+            <td>
+              {{#if this.isBlocked}}
+              <!-- Show "Unblock" button if isBlocked is true -->
+              <a href="/admin/user-unblock/{{this._id}}" class="btn btn-blocked"
+                onclick="return confirmUnblock();">Unblock</a>
+              {{else}}
+              <!-- Show "Block" button if isBlocked is false -->
+              <a href="/admin/user-block/{{this._id}}" class="btn btn-block" onclick="return confirmBlock();">Block</a>
+              {{/if}}
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</body>
+
+</html>
+
+
+
+<style>
+  /* admin.css */
+
+  body {
+    font-family: Arial, sans-serif;
+  }
+
+  .container {
+    width: 80%;
+    margin: auto;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    border: 1px solid #007bff;
+    border-radius: 4px;
+  }
+
+  .btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+  }
+
+  .btn-block,
+  .btn-blocked {
+    width: 100px;
+  }
+
+  .btn-blocked {
+    background-color: #dc3545;
+    border-color: #dc3545;
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .table th,
+  .table td {
+    border: 1px solid #dee2e6;
+    padding: 8px;
+  }
+
+  .table th {
+    background-color: #f8f9fa;
+    color: #212529;
+    font-weight: bold;
+    text-align: left;
+  }
+</style>

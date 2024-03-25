@@ -1,0 +1,135 @@
+<head>
+  <link rel="stylesheet" href="/stylesheets/select-store.css">
+</head>
+<section id="carousal1">
+    <div class="row p-5 ">
+    <div class="contanier p-5  ">
+<form class="form-class" action="/select-store" method="post">
+<input type="hidden" id="productId" name="productId" value="{{product._id}}">
+        <div>
+          <label for="state">Choose a state:</label>
+          <select name="state" id="state" class="state-dropdown" required>
+            <option value="" selected disabled>Select a state</option>
+            {{#each states}}
+            <option value="{{this.stateName}}">{{this.stateName}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div>
+          <label for="district">Choose a District:</label>
+          <select name="district" id="district" class="district-dropdown" disabled required>
+            <option value="" selected disabled>Select a state first</option>
+            {{#each district}}
+            <option value="{{this.districtName}}">{{this.districtName}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div>
+            <label for="storeDropdown">Select a Store:</label>
+            <select id="storeDropdown"name="selectedStore" class="store-dropdown" disabled required>
+                {{#if stores.length}}
+                <option value="" selected disabled>Select a store</option>
+                    {{#each stores}}
+                        <option value="{{this.shopName}}">{{this.shopName}}</option>
+                    {{/each}}
+                {{else}}
+                    <option >No stores in this location</option>
+                {{/if}}
+            </select>
+<button type="submit" onclick="redirectToCart()">Select Store</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  function redirectToCart() {
+    // Redirect the user to the cart page
+    window.location.href = '/'; // Replace '/cart' with the actual URL of your cart page
+  }
+</script>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const stateDropdown = document.getElementById('state');
+    const districtDropdown = document.getElementById('district');
+    const storeDropdown = document.getElementById('storeDropdown');
+
+    stateDropdown.addEventListener('change', function () {
+      const selectedState = stateDropdown.value;
+      // Fetch districts for the selected state from your server
+      $.ajax({
+        url: `/api/districts/${selectedState}`,
+        method: 'GET',
+        success: function (data) {
+          console.log("Data: ", data);
+          updateDistrictDropdown(districtDropdown, data);
+          // Fetch seller details and populate store dropdown on state change
+          fetchSellerDetails();
+        },
+        error: function (error) {
+          console.error('Error fetching districts:', error);
+        }
+      });
+    });
+
+    districtDropdown.addEventListener('change', function () {
+      fetchSellerDetails();
+    });
+
+    // Fetch seller details and populate store dropdown on page load
+    fetchSellerDetails();
+  });
+
+  function updateDistrictDropdown(districtDropdown, districts) {
+    districtDropdown.innerHTML = '<option value="" selected disabled>Select a district</option>';
+    districts.forEach(function (district) {
+      const option = document.createElement('option');
+      option.value = district.districtName;
+      option.textContent = district.districtName;
+      districtDropdown.appendChild(option);
+    });
+    districtDropdown.disabled = false;
+  }
+
+  function fetchSellerDetails() {
+    const selectedState = document.getElementById('state').value;
+    const selectedDistrict = document.getElementById('district').value;
+    const storeDropdown = document.getElementById('storeDropdown');
+    const productId = document.getElementById('productId').value; // Get the product ID
+  
+    // Check if both state and district are selected
+    if (selectedState && selectedDistrict) {
+        // Fetch seller details based on the selected state, district, and product ID
+        $.ajax({
+            url: `/api/sellers?state=${selectedState}&district=${selectedDistrict}&productId=${productId}`, // Include productId in the URL
+            method: 'GET',
+            success: function (sellerDetails) {
+                populateStoreDropdown(storeDropdown, sellerDetails);
+            },
+            error: function (error) {
+                console.error('Error fetching seller details:', error);
+            }
+        });
+    } else {
+        // If either state or district is not selected, disable the store dropdown
+        storeDropdown.innerHTML = '<option value="" selected disabled>Select a store</option>';
+        storeDropdown.disabled = true;
+    }
+}
+
+  function populateStoreDropdown(storeDropdown, sellers) {
+  console.log("Sellers:", sellers); // Add this line to check received data
+  storeDropdown.innerHTML = '<option value="" selected disabled>Select a store</option>';
+  sellers.forEach(function (seller) {
+    const option = document.createElement('option');
+    option.value = seller.shopName;
+    option.textContent = seller.shopName;
+    storeDropdown.appendChild(option);
+  });
+  storeDropdown.disabled = false;
+}
+
+</script>

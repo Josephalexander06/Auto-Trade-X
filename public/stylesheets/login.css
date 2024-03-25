@@ -1,74 +1,85 @@
+*{
+    padding: 0%;
+    margin: 0%;
+}
 
-    
-    .background {
-        background-color: #c72f2f;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        margin-top: 50px;
-        margin-bottom: 50px;
-        margin-left: 200px;
-        margin-right: 200px;
+#outerbox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
 
-    }
-    .body{
-        background-color: #b11010;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        margin-top: 50px;
-        margin-bottom: 50px;
-        margin-left: 200px;
-        margin-right: 200px;
+#innerbox{
+    display: flex;
+    background-color: white;
+    width: 70%;
+    height: 500px;
+}
 
-    }
-    .error {
-        color: red;
-    }
 
-    .success {
-        color: green;
-    }
+.leftinnerbox{
+    background-color: #786b78;
+    color: white;
+    font-family: sans-serif;
+    width: 45%;
+}
 
-    .form-group {
-        margin-bottom: 10px;
+.rightinnerbox{
+    font-family: sans-serif;
+    width: 55%;
+    padding-top: 20px;
+}
 
-    }
+.para1{
+    margin-top: 35px;font-weight: bold;font-size: 25px;padding-top:40px;width:75%;margin: auto;
+}
 
-    .form-control {
-        border-radius: 0;
-    }
+.para2{
+    margin-top: 20px;font-size: 18px;padding-top: 27px;width: 75%;margin: auto;
+}
 
-    .btn {
-        border-radius: 0;
+.email{
+    width: 70%; margin-top: 10px;height: 25px;
+    outline: 0;
+    border-width: 0 0 2px;
+    border-color: gray
+}
 
-    }
+.email:focus {
+    outline:0;
+    border-width: 0 0 2px;
+    border-color: black
+  }
 
-    .btn-block {
-        border-radius: 0;
-    }
+  .name{
+    width: 70%; margin-top: 10px;height: 25px;
+    outline: 0;
+    border-width: 0 0 2px;
+    border-color: gray
+}
 
-    .btn-info {
-        border-radius: 0;
-    }
+.name:focus {
+    outline:0;
+    border-width: 0 0 2px;
+    border-color: black
+  }
 
-    .btn-info:hover {
-        border-radius: 0;
-    }
+  
+  .password{
+    width: 70%; margin-top: 10px;height: 25px;
+    outline: 0;
+    border-width: 0 0 2px;
+    border-color: gray
+}
 
-    .btn-info:active {
-        border-radius: 0;
-    }
+.password:focus {
+    outline:0;
+    border-width: 0 0 2px;
+    border-color: black
+  }
 
-    .btn-info:focus {
-        border-radius: 0;
-    }
-
-    .btn-info:active:focus {
-        border-radius: 0;
-    }
-
-    .btn-info:active:hover {
-        border-radius: 0;
-    }
-
+.textm{
+   font-size: 12px;width: 80%;
+    margin: auto;padding-top: 10px;
+}

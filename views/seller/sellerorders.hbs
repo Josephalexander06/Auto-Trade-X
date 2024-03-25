@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seller Orders</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/stylesheets/sellerOrders.css"> <!-- Add your custom stylesheet if needed -->
+</head>
+
+<body class="bg-light">
+  <div class="container">
+    <h2 class="mt-4">Welcome, {{seller.sname}}!</h2>
+
+    <h3 class="mt-4">Your Orders:</h3>
+
+    {{#if sellerOrder.length}}
+    <ul class="list-unstyled">
+      {{#each sellerOrder}} <!-- Reverse the order array -->
+      <li class="card my-5">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <h5 class="card-title">Order ID: {{this._id}}</h5>
+              <ul class="list-unstyled">
+                <li> <strong>User ID: </strong>{{this.userId}}</li>
+                <li> <strong>Delivery Details: </strong><br>
+                  <strong>Mobile No : </strong>{{this.deliveryDetails.mobile}}, <strong>Address:
+                  </strong>{{this.deliveryDetails.address}}, <br><strong> City: </strong>{{this.deliveryDetails.city}},
+                  <strong> Pincode: </strong>{{this.deliveryDetails.zipcode}}
+                </li>
+              </ul>
+            </div>
+            <p>Status:{{status}}</p>
+            {{#each this.products}}
+            <div class="col-md-6">
+              <ul class="list-unstyled">
+                <li>
+                  <strong>Product Name:</strong> {{this.name}}<br>
+                  <strong>Quantity:</strong> {{this.quantity}}<br>
+                  <strong>Selling Amount:</strong> {{this.sellingAmount}}<br>
+                  <strong>Date:</strong> {{this.date}}<br>
+                  <strong>Receipt ID:</strong> {{this.receiptId}}<br>
+                </li>
+              </ul>
+              <img class="align-self-center img-fluid" src="/product-images/{{productId}}-front.jpg" width="180"
+                height="180" style="float: inline-end">
+            </div>
+            {{/each}}
+
+          </div>
+          <h4>Status Updation :</h4>
+          <div class="col">
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton_{{this._id}}"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Action
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton_{{this._id}}">
+                <a class="dropdown-item confirm" href="#" onclick="changeOrderStatus('{{this._id}}', 'confirmed')">Confirm</a>
+                <a class="dropdown-item cancel" href="#" onclick="changeOrderStatus('{{this._id}}', 'cancelled')">Cancel</a>
+                <a class="dropdown-item delivered" href="#" onclick="changeOrderStatus('{{this._id}}', 'delivered')">Delivered</a>
+              </div>
+            </div>
+          </div>
+
+      </li>
+      {{/each}}
+    </ul>
+    {{else}}
+    <p>No orders available.</p>
+    {{/if}}
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    // Function to change order status and update button visibility
+    function changeOrderStatus(orderId, status) {
+      // Send AJAX request to change order status
+      $.ajax({
+        url: '/seller/change-order-status',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({ orderId: orderId, status: status }),
+        success: function(data) {
+          if (data.success) {
+            alert("Order status changed successfully");
+            // Hide other options based on the selected option
+            setButtonVisibility(orderId, status);
+          } else {
+            console.error("Error changing order status");
+          }
+        },
+        error: function(xhr, status, error) {
+          console.error("AJAX error:", error);
+        }
+      });
+    }
+
+    // Function to hide other options based on the selected option
+    function setButtonVisibility(orderId, status) {
+      const dropdownMenu = document.getElementById(`dropdownMenuButton_${orderId}`);
+      const confirmOption = dropdownMenu.querySelector('.confirm');
+      const cancelOption = dropdownMenu.querySelector('.cancel');
+      const deliveredOption = dropdownMenu.querySelector('.delivered');
+
+      // Hide all options
+      confirmOption.style.display = 'none';
+      cancelOption.style.display = 'none';
+      deliveredOption.style.display = 'none';
+
+      // Show only the selected option
+      if (status === 'confirmed') {
+        confirmOption.style.display = 'block';
+        deliveredOption.style.display = 'block';
+      } else if (status === 'cancelled') {
+        cancelOption.style.display = 'block';
+      }
+    }
+  </script>
+</body>
+
+</html>

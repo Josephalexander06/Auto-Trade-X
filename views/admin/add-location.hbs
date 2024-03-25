@@ -1,0 +1,83 @@
+<section>
+  <h2>Add State</h2>
+  <form action="/admin/add-location" method="POST">
+    <label for="stateName">State Name:</label>
+    <input type="text" id="stateName" name="stateName" required>
+    <button type="submit">Add State</button>
+  </form>
+
+
+  <h2>Add District</h2>
+  <form action="/admin/add-location" method="POST">
+    <!-- State Dropdown -->
+    <div>
+      <label for="state">Choose a State:</label>
+      <select name="state" id="state" class="state-dropdown">
+        {{#each states}}
+        <option value="{{this.stateName}}">{{this.stateName}}</option>
+        {{/each}}
+      </select>
+    </div>
+    <br>
+    <label for="districtName">District Name:</label>
+    <input type="text" id="districtName" name="districtName" required>
+    <button type="submit">Add District</button>
+  </form>
+</section>
+<!-- admin/add-district.handlebars -->
+
+
+{{!--
+<!-- District Dropdown -->
+<div>
+  <label for="district">Choose a District:</label>
+  <select name="district" id="district" class="district-dropdown" disabled>
+    <option value="" selected disabled>Select a state first</option>
+    {{#each districts}}
+    <option value="{{this.districtName}}">{{this.districtName}}</option>
+    {{/each}}
+  </select>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const stateDropdown = document.getElementById('state');
+    const districtDropdown = document.getElementById('district');
+
+    stateDropdown.addEventListener('change', function () {
+      const selectedState = stateDropdown.value;
+
+      // Find districts for the selected state
+      const districts = [];
+      { { #each districts } }
+      { { #ifCond this.stateName '===' selectedState } }
+      districts.push('{{this.districtName}}');
+      {
+        {
+          /ifCond}}
+          {
+            {
+              /each}}
+
+              // Update district dropdown options
+              updateDistrictDropdown(districtDropdown, districts);
+            });
+  });
+
+  function updateDistrictDropdown(districtDropdown, districts) {
+    // Clear existing options
+    districtDropdown.innerHTML = '<option value="" selected disabled>Select a district</option>';
+
+    // Add new options
+    districts.forEach(function (district) {
+      const option = document.createElement('option');
+      option.value = district;
+      option.textContent = district;
+      districtDropdown.appendChild(option);
+    });
+
+    // Enable district dropdown
+    districtDropdown.disabled = false;
+  }
+</script> --}}

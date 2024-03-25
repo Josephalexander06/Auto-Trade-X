@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compare Products</title>
+    <link rel="stylesheet" href="/stylesheets/compare.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Compare Products</h1>
+        <div class="comparison-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Details</th>
+                        <th>Product 1</th>
+                        <th>Product 2</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <td></td>
+                    <td id="productImage1"><img src="/product-images/{{product1._id}}-front.jpg" alt=""
+                            class="product-image"></td>
+                    <td id="productImage2"><img src="/product-images/{{product2._id}}-front.jpg" alt=""
+                            class="product-image"></td>
+
+                    <tr>
+                        <td>Vehicle Name</td>
+                        <td id="productName1">{{ product1.vehicleName }}</td>
+                        <td id="productName2">{{ product2.vehicleName }}</td>
+                    </tr>
+                    <tr>
+                        <td>Price</td>
+                        <td id="productPrice1">{{ product1.price }}</td>
+                        <td id="productPrice2">{{ product2.price }}</td>
+                    </tr>
+                    <tr>
+                        <td>Year</td>
+                        <td id="productYear1">{{ product1.year }}</td>
+                        <td id="productYear2">{{ product2.year }}</td>
+                    </tr>
+                    <tr>
+                        <td>Description</td>
+                        <td id="productDescription1">{{ product1.description }}</td>
+                        <td id="productDescription2">{{ product2.description }}</td>
+                    </tr>
+                    <tr>
+                        <td>Transmission</td>
+                        <td id="productTransmission1">{{ product1.transmission }}</td>
+                        <td id="productTransmission2">{{ product2.transmission }}</td>
+                    </tr>
+                    <tr>
+                        <td>Fuel Type</td>
+                        <td id="productFuelType1">{{ product1.fuelType }}</td>
+                        <td id="productFuelType2">{{ product2.fuelType }}</td>
+                    </tr>
+                    <tr>
+                        <td>Number of Doors</td>
+                        <td id="productNumDoors1">{{ product1.numDoors }}</td>
+                        <td id="productNumDoors2">{{ product2.numDoors }}</td>
+                    </tr>
+                    <tr>
+                        <td>Number of Seats</td>
+                        <td id="productNumSeats1">{{ product1.numSeats }}</td>
+                        <td id="productNumSeats2">{{ product2.numSeats }}</td>
+                    </tr>
+                    <tr>
+                        <td>Features</td>
+                        <td id="productFeatures1">{{ product1.features }}</td>
+                        <td id="productFeatures2">{{ product2.features }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+
+</html>

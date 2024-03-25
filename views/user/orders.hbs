@@ -1,123 +1,109 @@
-{{!-- <section>
-  <div class="container">
-    <div class="row mt-4">
-      <h2>All Order</h2>
-    </div>
-    <table class="table table-bordered mt-5">
-      <thead>
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Date</th>
-          <th scope="col">Amount</th>
-          <th scope="col">Payment</th>
-          <th scope="col">Quantity</th>
-          <th scope="col">Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each orders}}
-        <tr>
-          <td>{{this.productName}}</td>
-          <td>{{this.date}}</td>
-          <td>{{this.totalAmount}}</td>
-          <td>{{this.paymentMethod}}</td>
-          <td>{{this.quantity}}</td>
-          <td>{{this.status}}</td>
-
-          <td>
-            <a href="/view-order-products/{{this._id}}" class="btn btn-primary">View Products</a>
-            <a href="/cancel-order/{{this._id}}" class="btn btn-primary">Cancel</a>
-
-          </td>
-        </tr>
-        {{/each}}
-      </tbody>
-    </table>
-  </div>
-</section> --}}
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
- <link rel="stylesheet" href="/stylesheets/orders.css">
- </head>
-<section>
- <div class="container-fluid my-5 d-sm-flex justify-content-center">
-    <div class="card px-2">
-      {{#each orders}}
-      {{#each products}}
-        <div class="card-header bg-white">
-          <div class="row justify-content-between">
-            <div class="col">
-                <p class="text-muted"> Order ID  <span class="font-weight-bold text-dark">{{receiptId}}</span></p> 
-                <p class="text-muted"> Place On <span class="font-weight-bold text-dark"> {{date}}</span> </p></div>
-                <div class="flex-col my-auto">
-                    <h6 class="ml-auto mr-3">
-                        <a href="#">View Details</a>
-                    </h6>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Order Details</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/stylesheets/orders.css">
+</head>
+
+<body>
+    <section>
+        <div class="container-fluid my-5 d-sm-flex justify-content-center">
+            <div class="card px-2">
+                {{#if orders.length}}
+                {{#each orders}}
+                {{#each products}}
+                <div class="card-header bg-white">
+                    <div class="row justify-content-between">
+                        <div class="col">
+                            <p class="text-muted"> Order ID <span
+                                    class="font-weight-bold text-dark">{{receiptId}}</span></p>
+                            <p class="text-muted"> Place On <span class="font-weight-bold text-dark">{{date}}</span>
+                            </p>
+                        </div>
+                    </div>
                 </div>
-          </div>
-        </div>
-        <div class="card-body">
-            <div class="media flex-column flex-sm-row">
-                <div class="media-body ">
-                  
-                    <h5 class="bold">{{name}}</h5>
-                    <p class="text-muted"> Qt: {{quantity}} Pair</p>  
-                    <h4 class="mt-3 mb-4 bold"> <span class="mt-5">&#x20B9;</span> {{sellingAmount}} <span class="small text-muted"> via (COD) </span></h4>
-                    <p class="text-muted">Tracking Status on: <span class="Today">11:30pm, Today</span></p>
-                    <button type="button" class="btn  btn-outline-primary d-flex">Reached Hub, Delhi</button>    
-                </div><img class="align-self-center img-fluid" src="/product-images/{{productId}}.jpg" width="180 " height="180">
-            </div>
-        </div>
-        <div class="row px-3">
-            <div class="col">
-                <ul id="progressbar" >
-                    <li class="step0 active " id="step1">PLACED</li>
-                    <li class="step0 active text-center" id="step2">SHIPPED</li>
-                    <li class="step0  text-muted text-right" id="step3">DELIVERED</li>
-                </ul>
-            </div>
-        </div>
-         <div class="card-footer  bg-white px-sm-3 pt-sm-4 px-0">
-            <div class="row text-center  ">
-                <div class="col my-auto  border-line "><h5 >Track</h5></div>
-                <div class="col  my-auto  border-line "><h5> <button onclick="cancelOrder('{{productId}}')" class="btn btn-primary">Cancel</button></h5></div>
-                <div class="col my-auto   border-line "><h5>Pre-pay</h5></div>
-                <div class="col  my-auto mx-0 px-0 "><img class="img-fluid cursor-pointer" src="https://img.icons8.com/ios/50/000000/menu-2.png" width="30" height="30"></div>
-            </div>
-        </div>
-        {{/each}}
-        {{/each}}
-    </div>
-</div>
-</section>
+                <div class="card-body">
+                    <div class="media flex-column flex-sm-row">
+                        <div class="media-body">
+                            <h5 class="bold">{{name}}</h5>
+                            <p class="text-muted"> Qt: {{quantity}} Pair</p>
+                            <h4 class="mt-3 mb-4 bold"> <span class="mt-5">&#x20B9;</span> {{sellingAmount}} <span
+                                    class="small text-muted"> via (ONLINE) </span></h4>
+                        </div>
+                        <img class="align-self-center img-fluid" src="/product-images/{{productId}}-front.jpg"
+                            width="180" height="180">
+                    </div>
+                </div>
+                {{/each}}
+                <h3 class="order-status">Order Status: {{status}}</h3>
+                <div class="row text">
+                    <div class="col  border-line">
+                        <h5> <button onclick="cancelOrder('{{orderId}}', '{{productId}}')"
+                                class="btn btn-primary">Cancel</button></h5>
+                    </div>
 
-<script>
+                    <div class="flex-col m">
+                        <h6 class=" mr-3">
+                            <a href="#" class="btn btn-primary">View Details</a>
+                        </h6>
+                    </div>
+                </div>
 
-    function cancelOrder(orderId) {
-      fetch('/cancel-order', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ order: orderId })
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.removeProduct) {
-          alert("Product Removed Successfully");
-          location.reload();
-        } else {
-          console.error("Error removing product");
+                <div class="seller-details">
+                    <h3>Seller Details</h3>
+                    <p><strong>Shop Name:</strong> <span>{{shopName}}</span></p>
+                    <p><strong>Phone Number:</strong> <span>{{phoneNumber}}</span></p>
+                    <p><strong>NearBy:</strong> <span>{{NearBy}}</span></p>
+                    <p><strong>State:</strong> <span>{{state}}</span></p>
+                    <p><strong>District:</strong> <span>{{district}}</span></p>
+                </div>
+
+                <h1>----------------------------------------------------------------</h1>
+                {{/each}}
+                {{else}}
+                <p>No orders available.</p>
+                {{/if}}
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function cancelOrder(orderId, productId) {
+            // Ensure orderId is treated as a string
+            orderId = String(orderId);
+
+            fetch('/cancel-order', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ order: orderId })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.removeProduct) {
+                        alert("Order Canceled Successfully");
+                        // Update the order status to "cancel" in the UI
+                        document.querySelector(`#order-${productId} .order-status`).textContent = "Order Status: Cancel";
+                        // You might need to update other UI elements as well depending on your requirement
+                    } else {
+                        console.error("Error canceling order");
+                    }
+                })
+                .catch(error => {
+                    console.error("Fetch error:", error);
+                });
         }
-      })
-      .catch(error => {
-        console.error("Fetch error:", error);
-      });
-    }
- </script> 
 
 
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></script>
+    </script>
+</body>
+
+</html>

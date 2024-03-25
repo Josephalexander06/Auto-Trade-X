@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seller Panel - Product List</title>
+  <link rel="stylesheet" href="/stylesheets/admin-products.css">
+</head>
+
+<body>
+  <div class="admin-panel">
+    <h1>Product List</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th> <!-- Add a column for the number -->
+          <th>Product Name</th>
+          <th>Year</th>
+          <th>Price</th>
+          <th>BookingAmount</th>
+          <th>Stocks</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each products}}
+        <tr>
+          <td>{{@index}}</td> <!-- Display the index of the product in the loop -->
+          <td>{{this.vehicleName}}</td>
+          <td>{{this.year}}</td>
+          <td>{{this.price}}</td>
+          <td>{{this.BookingAmount}}</td>
+          <td>{{this.quantity}}</td>
+          <td>
+            <button class="edit-btn" data-id="{{this._id}}">Edit</button>
+            <button class="delete-btn" data-id="{{this._id}}">Delete</button>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Include Handlebars library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Add event listener to edit buttons
+      const editButtons = document.querySelectorAll('.edit-btn');
+      editButtons.forEach(button => {
+        button.addEventListener('click', function () {
+          const productId = button.dataset.id;
+          // Redirect to the edit page with the product ID
+          window.location.href = `/seller/edit-product/${productId}`;
+        });
+      });
+
+      // Add event listener to delete buttons
+      const deleteButtons = document.querySelectorAll('.delete-btn');
+      deleteButtons.forEach(button => {
+        button.addEventListener('click', async function () {
+          const productId = button.dataset.id;
+          try {
+            // Send DELETE request to server
+            const response = await fetch(`/admin/products/${productId}`, {
+              method: 'DELETE'
+            });
+            if (response.ok) {
+              console.log("Removed product with ID:", productId);
+              location.reload();
+            } else {
+              console.error('Delete request failed:', response.statusText);
+            }
+          } catch (error) {
+            console.error('Error deleting product:', error);
+          }
+        });
+      });
+    });
+  </script>
+
+</body>
+
+</html>

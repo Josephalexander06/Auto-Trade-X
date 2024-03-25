@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+
+    <section class="vh-100">
+        <div class="container py-5 h-100">
+            <div class="row d-flex align-items-center justify-content-center h-100">
+                <h2>Enter OTP</h2>
+                <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+                    <form id="otpForm" action="/verify-otp" method="POST">
+                        <div id="timer"></div>
+                        {{#if otpErr}}
+                        <p class="error">{{otpErr}}</p>
+                        {{/if}}
+                        <!-- OTP input -->
+                        <div class="form-outline mb-4">
+                            <input type="text" name="otp" id="otp" class="form-control form-control-lg" maxlength="6" />
+                        </div>
+
+                        <!-- Hidden input to store email -->
+                        <input type="hidden" name="email" id="email" value="{{email}}" />
+
+                        <!-- Submit button -->
+                        <button type="submit" class="btn btn-primary btn-lg btn-block">Verify OTP</button>
+
+                    </form>
+                    <!-- Resend OTP button -->
+                    <button id="resendOTP" class="btn btn-link">Resend OTP</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // Countdown timer and OTP resend functionality
+        window.onload = function () {
+            const display = document.querySelector('#timer');
+            let timerInterval;
+
+            function startTimer(duration) {
+                let timer = duration, minutes, seconds;
+                timerInterval = setInterval(function () {
+                    minutes = parseInt(timer / 60, 10);
+                    seconds = parseInt(timer % 60, 10);
+
+                    minutes = minutes < 10 ? "0" + minutes : minutes;
+                    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                    display.textContent = minutes + ":" + seconds;
+
+                    if (--timer < 0) {
+                        clearInterval(timerInterval); // Stop the timer
+                    }
+                }, 1000);
+            }
+
+            // Initialize timer
+            startTimer(30);
+
+            // Resend OTP button click event
+            document.getElementById('resendOTP').addEventListener('click', async function () {
+                try {
+                    const response = await fetch('/resend-otp', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email: document.getElementById('email').value }) // Use the entered email
+                    });
+                    if (response.ok) {
+                        // OTP resend successful, restart timer
+                        clearInterval(timerInterval); // Clear previous interval
+                        display.textContent = '00:30'; // Reset display
+                        startTimer(30); // Start new timer
+                    } else {
+                        // OTP resend failed
+                        console.error('Failed to resend OTP');
+                    }
+                } catch (error) {
+                    console.error('Error resending OTP:', error);
+                }
+            });
+
+            // Validate OTP input to allow only 6-digit numbers
+            document.getElementById('otp').addEventListener('input', function () {
+                if (this.value.length > 6) {
+                    this.value = this.value.slice(0, 6); // Limit to 6 characters
+                }
+                this.value = this.value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
+            });
+
+            // Submit form handler
+            document.getElementById('otpForm').addEventListener('submit', function (event) {
+                const otpInput = document.getElementById('otp');
+                if (otpInput.value.length !== 6) {
+                    event.preventDefault(); // Prevent form submission if OTP length is not 6
+                    alert('Please enter a 6-digit OTP.');
+                }
+            });
+        };
+    </script>
+
+</body>
+
+<style>
+    .divider:after,
+    .divider:before {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: #eee;
+    }
+
+    .h-custom {
+        height: calc(100% - 73px);
+    }
+
+    @media (max-width: 450px) {
+        .h-custom {
+            height: 100%;
+        }
+    }
+</style>
+
+</html>

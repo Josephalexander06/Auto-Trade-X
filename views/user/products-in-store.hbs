@@ -1,0 +1,15 @@
+<!-- products-in-store.hbs -->
+<section>
+    <div class="container mt-5">
+        <div class="row">
+            {{#each productsInStore}}
+            <div class="col">
+                <!-- Display product details here -->
+                <h3>{{this.name}}</h3>
+                <p>{{this.description}}</p>
+                <!-- Add other product details as needed -->
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</section>

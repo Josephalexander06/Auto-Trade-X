@@ -1,74 +1,130 @@
-.collapse .navbar-collapse {
-    background-color: blue;
+#para1{
+    border: 4px solid orange;
 }
 
-.main-navbar {
-    border-bottom: 1px solid #ccc;
+nav{
+    background-color: #ffffff;
 }
 
-.main-navbar .top-navbar {
-    background-color: #2874f0;
-    padding-top: 10px;
-    padding-bottom: 10px;
+#nav{
+    display: flex;
+ justify-content: space-around;
+ padding-top: 10px;
+ padding-bottom: 10px;
+ background-color:#eaf0f1;
+ width: 90%;
+ margin: auto;
 }
 
-.main-navbar .top-navbar .brand-name {
-    color: #fff;
+#nav1{
+    display: flex;
+    flex-direction: column;
 }
 
-.main-navbar .top-navbar .nav-link {
-    color: #fff;
-    font-size: 16px;
-    font-weight: 500;
+body{
+    background-color: #e8f0f1;
 }
 
-.main-navbar .top-navbar .dropdown-menu {
-    padding: 0px 0px;
-    border-radius: 0px;
+#logo_name{
+    font-size: 20px;
+    font-family: sans-serif;
+    font-style: italic;
+    color: #2A55E5;
+    font-weight: bold;
 }
 
-.main-navbar .top-navbar .dropdown-menu .dropdown-item {
-    padding: 8px 16px;
-    border-bottom: 1px solid #ccc;
-    font-size: 14px;
+#input_data{
+    border: none;
+    width: 500px;
+    height: 20px;
+   padding-left: 12px;
+   background-color: #F0F5FF;
 }
 
-.main-navbar .top-navbar .dropdown-menu .dropdown-item i {
-    width: 20px;
-    text-align: center;
-    color: #2874f0;
-    font-size: 14px;
+.navtab{
+    display: flex;
+    align-items: center;
 }
 
-.main-navbar .navbar {
-    padding: 0px;
-    background-color: #ddd;
+#searchbar{
+    background-color: #D3D3D3;
+    padding: 4px;
+    border-radius: 10px;
 }
 
-.main-navbar .navbar .nav-item .nav-link {
-    padding: 8px 20px;
-    color: #000;
-    font-size: 15px;
+option{
+    font-size: 15px; 
+    font-family: sans-serif;
 }
 
-@media only screen and (max-width: 600px) {
-    .main-navbar .top-navbar .nav-link {
-        font-size: 12px;
-        padding: 8px 10px;
-    }
+select{
+    border: none;
+    font-size: 15px; 
+    font-family: sans-serif;
 }
 
-nav {
-    background-color: blue;
-}
 
-.nav-link {
-    display: block;
-    padding: 0.5rem 1rem;
-    color: black;
+#categories{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 6px;
+    margin: 12px;
+    margin: auto;
+    width: 95%;
+    margin: auto;
+    background-color: white;
+    margin-top: 10px;
+    font-family: sans-serif;
 }
-
-.fa {
-    color: blue;
+#search-bar{
+    font-size: 12px;
+    width: 500px;
+    height: inherit;
+    margin-left: 10px;
+    background-color: transparent;
     cursor: pointer;
+}
+
+
+#categories > div > img{
+   height: 70px;
+   width: 60px;
+   background-color: white;
+}
+
+#categories > div{
+display: flex;
+flex-direction: column;
+align-items: center;
+font-weight: bold;
+font-size: 14px;
+padding: 10px;
+}
+
+#categories > div > p{
+    padding-top: 10px;
+}
+
+
+li{
+    list-style: none;
+}
+
+#footer{
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 18px;
+    padding-top: 18px;
+}
+
+.heading{
+    color: gray;
+}
+
+.myform-inline .form-control {
+    display: inline-block;
+    width: 325px;
+    vertical-align: middle;
 }

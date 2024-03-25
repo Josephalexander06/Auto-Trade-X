@@ -1,0 +1,62 @@
+<!-- conversation.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversation</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/styles/conversation.css"> <!-- Link to your custom CSS file -->
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Admin's conversation -->
+            <div class="col-md-4">
+                <div class="conversation">
+                    <div class="conversation-header">
+                        Admin
+                    </div>
+                    <div class="conversation-body">
+                        <!-- Messages from admin and seller will be displayed here -->
+                        <div class="message admin">Hello! How can I help you?</div>
+                        <div class="message seller">Hi! I have a question about my order.</div>
+                        <!-- More messages... -->
+                    </div>
+                    <div class="conversation-footer">
+                        <!-- Form to send a message to the seller -->
+                        <form action="/send-message" method="POST">
+                            <input type="text" class="form-control" name="message" placeholder="Type your message...">
+                            <button type="submit" class="btn btn-primary">Send</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Seller's conversation -->
+            <div class="col-md-8">
+                <div class="conversation">
+                    <div class="conversation-header">
+                        Seller
+                    </div>
+                    <div class="conversation-body">
+                        <!-- Messages from admin and seller will be displayed here -->
+                        <div class="message admin">Sure! What is your question?</div>
+                        <div class="message seller">I want to know the delivery status.</div>
+                        <!-- More messages... -->
+                    </div>
+                    <div class="conversation-footer">
+                        <!-- Form to send a message to the admin -->
+                        <form action="/send-message" method="POST">
+                            <input type="text" class="form-control" name="message" placeholder="Type your message...">
+                            <button type="submit" class="btn btn-primary">Send</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

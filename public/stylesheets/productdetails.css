@@ -1,0 +1,161 @@
+/* Product View */
+.product-view .product-name{
+    font-size: 24px;
+    color: #2874f0;
+}
+.product-view .product-name .label-stock{
+    font-size: 13px;
+    padding: 4px 13px;
+    border-radius: 5px;
+    color: #fff;
+    box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%);
+    float: right;
+}
+.product-view .product-path{
+    font-size: 13px;
+    font-weight: 500;
+    color: #252525;
+    margin-bottom: 16px;
+}
+.product-view .selling-price{
+    font-size: 26px;
+    color: #000;
+    font-weight: 600;
+    margin-right: 8px;
+}
+.product-view .original-price{
+    font-size: 24px;
+    color: #000;
+    font-weight: 500;
+}
+.product-view .btn1{
+    border: 1px solid;
+    margin-right: 3px;
+    border-radius: 0px;
+    font-size: 14px;
+    margin-top: 10px;
+}
+.product-view .btn1:hover{
+    background-color: #2874f0;
+    color: #fff;
+}
+.product-view .input-quantity{
+    border: 1px solid #000;
+    margin-right: 3px;
+    font-size: 12px;
+    margin-top: 10px;
+    width: 58px;
+    outline: none;
+    text-align: center;
+}
+.left-arrow,
+.right-arrow {
+    width: 32px;
+    height: 32px;
+    background-color: rgba(255, 255, 255, 0.5); /* Adjust the background color and opacity as needed */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.left-arrow:hover,
+.right-arrow:hover {
+    background-color: rgba(255, 255, 255, 0.8); /* Adjust the hover background color and opacity as needed */
+}
+
+/* Adjust the styling of the SVG icons inside the arrows */
+.left-arrow svg,
+.right-arrow svg {
+    width: 16px;
+    height: 16px;
+    fill: #000; /* Adjust the color of the arrow icon */
+}
+
+/* Optionally, add transition effects for smoother hover behavior */
+.left-arrow,
+.right-arrow {
+    transition: background-color 0.3s ease;
+}
+.card {
+    border: 1px solid #ddd; /* Add a border around the card */
+    border-radius: 10px; /* Add rounded corners to the card */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow effect */
+}
+
+.card-header {
+    background-color: #f8f9fa; /* Light gray background for the card header */
+    border-bottom: 1px solid #ddd; /* Add a bottom border to the card header */
+}
+
+.card-header h4 {
+    margin-bottom: 0; /* Remove bottom margin from the heading */
+}
+
+.card-body {
+    padding: 20px; /* Add some padding inside the card body */
+}
+
+.card-body p {
+    margin-bottom: 0; /* Remove bottom margin from the paragraph */
+}
+
+.card-body strong {
+    color: #007bff; /* Change the color of the "Features" label */
+}
+/* Style for the container */
+.small-description {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f8f9fa; /* Light background color */
+    border: 1px solid #dee2e6; /* Border color */
+    border-radius: 8px; /* Rounded corners */
+}
+
+/* Style for the heading */
+.small-description h5 {
+    margin-bottom: 5px;
+    color: #007bff; /* Blue color */
+}
+
+/* Style for the paragraph */
+.small-description p {
+    margin: 0;
+    color: #6c757d; /* Text color */
+}
+
+/* Style for the strong elements */
+.small-description strong {
+    font-weight: bold;
+    color: #343a40; /* Dark text color */
+}
+
+/* Add some spacing between the strong elements */
+.small-description strong + strong {
+    margin-left: 10px;
+}
+.price-info {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.original-price,
+.selling-price {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.original-price {
+    color: #666;
+}
+
+.selling-price {
+    color: #00c853; /* Green color for selling price */
+    font-weight: bold;
+}
+
+/* Product View */

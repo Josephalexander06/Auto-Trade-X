@@ -1,0 +1,146 @@
+<head>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/productdetails.css">
+</head>
+
+<div class="py-3 py-md-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5 mt-3">
+                <div class="bg-white border">
+                    <img id="productImage" src="/product-images/{{productDetails._id}}-front.jpg" class="w-100"
+                        alt="Front Image" onclick="changeImage('next')" style="cursor: pointer;">
+                    <div class="left-arrow" onclick="changeImage('prev')"
+                        style="position: absolute; top: 50%; transform: translateY(-50%); left: 10px; cursor: pointer;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                            class="bi bi-chevron-left" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M11.354 1.646a.5.5 0 0 1 0 .708L6.707 8l4.647 4.646a.5.5 0 1 1-.708.708l-5-5a.5.5 0 0 1 0-.708l5-5a.5.5 0 0 1 .708 0z" />
+                        </svg>
+                    </div>
+                    <div class="right-arrow" onclick="changeImage('next')"
+                        style="position: absolute; top: 50%; transform: translateY(-50%); right: 10px; cursor: pointer;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                            class="bi bi-chevron-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M4.646 1.646a.5.5 0 0 1 .708 0l5 5a.5.5 0 0 1 0 .708l-5 5a.5.5 0 1 1-.708-.708L9.293 8 4.646 3.354a.5.5 0 0 1 0-.708z" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-7 mt-3">
+                <div class="product-view">
+                    <h4 class="product-name">
+                        {{productDetails.vehicleName}}
+                        {{#if productDetails.quantity}}
+                        <label class="label-stock bg-success">In Stock</label>
+                        {{else}}
+                        <label class="label-stock bg-danger">Out of Stock</label>
+                        {{/if}}
+                    </h4>
+
+                    <hr>
+                    <p class="product-path">
+                        Home / {{productDetails.vehicleName}}
+                    </p>
+                    <div class="price-info">
+                        <span class="original-price">Price: ₹{{productDetails.price}}</span>
+                        <span class="selling-price">Booking Amount: ₹{{productDetails.BookingAmount}}</span>
+                    </div>
+                    <div class="mt-2 ml-5">
+                        <button id="addToCartBtn" onclick="goToSelectStore('{{productDetails._id}}')"
+                            class="btn btn-primary">Add to Cart</button>
+                    </div>
+
+                    <div class="mt-3 small-description">
+                        <h5 class="mb-0">Specification</h5><br>
+                        <p>
+                            <strong>Year: {{productDetails.year}}</strong>,
+                            <strong>Color: {{productDetails.color}}</strong>,
+                            <strong>Mileage: {{productDetails.mileage}}</strong>,
+                            <strong>Engine: {{productDetails.engine}}</strong>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 mt-3">
+                <div class="card">
+                    <div class="card-body">
+                        <p>
+                            <strong>Features : </strong>{{productDetails.features}} ,
+                            {{productDetails.numSeats}} Seats ,
+                            {{productDetails.numDoors}} Doors ,
+                            FuelType {{productDetails.fuelType}} ,
+                            Transmission {{productDetails.transmission}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+
+    var currentImageIndex = 0;
+    var imagePaths = [
+        "/product-images/{{productDetails._id}}-front.jpg",
+        "/product-images/{{productDetails._id}}-back.jpg"
+    ];
+
+    function changeImage(direction) {
+        if (direction === 'prev') {
+            currentImageIndex = (currentImageIndex - 1 + imagePaths.length) % imagePaths.length;
+        } else if (direction === 'next') {
+            currentImageIndex = (currentImageIndex + 1) % imagePaths.length;
+        }
+        document.getElementById('productImage').src = imagePaths[currentImageIndex];
+    }
+
+    function changeQuantity(cartId, productId, userId, count) {
+        console.log("Userid" + userId)
+        let quantity = parseInt(document.getElementById(productId).innerHTML)
+        count = parseInt(count)
+
+        $.ajax({
+            url: '/change-product-quantity',
+            data: {
+                user: userId,
+                cart: cartId,
+                product: productId,
+                count: count,
+                quantity: quantity,
+            },
+            method: 'POST',
+            success: (response) => {
+                if (response.removeProduct) {
+                    alert("Product Removed from cart")
+                    location.reload()
+                } else {
+                    document.getElementById(productId).innerHTML = quantity + count
+                    document.getElementById('total').innerHTML = response.total
+                }
+            }
+        })
+    }
+
+    function goToSelectStore(productId) {
+        // Redirect to the select-store page
+        window.location.href = '/select-store?_id=' + productId;
+    }
+    document.addEventListener("DOMContentLoaded", function () {
+        // Check if quantity is 0, then hide the button
+        var quantity = {{ productDetails.quantity }};
+    if (quantity === 0) {
+        var addToCartBtn = document.getElementById('addToCartBtn');
+        addToCartBtn.style.display = 'none';
+    }
+});
+</script>
