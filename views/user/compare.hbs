@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="/stylesheets/compare.css">
 </head>
 
+{{!--
+
 <body>
     <div class="container">
         <h1>Compare Products</h1>
@@ -47,36 +49,168 @@
                         <td id="productDescription1">{{ product1.description }}</td>
                         <td id="productDescription2">{{ product2.description }}</td>
                     </tr>
-                    <tr>
-                        <td>Transmission</td>
-                        <td id="productTransmission1">{{ product1.transmission }}</td>
-                        <td id="productTransmission2">{{ product2.transmission }}</td>
-                    </tr>
-                    <tr>
-                        <td>Fuel Type</td>
-                        <td id="productFuelType1">{{ product1.fuelType }}</td>
-                        <td id="productFuelType2">{{ product2.fuelType }}</td>
-                    </tr>
-                    <tr>
-                        <td>Number of Doors</td>
-                        <td id="productNumDoors1">{{ product1.numDoors }}</td>
-                        <td id="productNumDoors2">{{ product2.numDoors }}</td>
-                    </tr>
-                    <tr>
-                        <td>Number of Seats</td>
-                        <td id="productNumSeats1">{{ product1.numSeats }}</td>
-                        <td id="productNumSeats2">{{ product2.numSeats }}</td>
-                    </tr>
-                    <tr>
-                        <td>Features</td>
-                        <td id="productFeatures1">{{ product1.features }}</td>
-                        <td id="productFeatures2">{{ product2.features }}</td>
-                    </tr>
+
                 </tbody>
             </table>
         </div>
     </div>
 
-</body>
+</body> --}}
+
+
+
+<div class="container pb-5 mb-2">
+    <div class="comparison-table">
+        <table class="table table-bordered">
+            <thead class="bg-secondary">
+                <tr>
+                    <td class="align-middle">
+                        <select class="form-control custom-select" id="compare-criteria" data-filter="trigger">
+                            <option value="summary">Summary</option>
+                            <option value="general">General</option>
+                            <option value="price">Price</option>
+                        </select>
+                    </td>
+                    <td>
+                        <div class="comparison-item"><span class="remove-item"><svg xmlns="http://www.w3.org/2000/svg"
+                                    width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                    class="feather feather-x">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg></span>
+                            <a class="comparison-item-thumb" href="/productdetails/{{product1._id}}"
+                                class="product-link"><img src="/product-images/{{product1._id}}-front.jpg" alt=""
+                                    class="product-image"></a><a class="comparison-item-title"
+                                href="/productdetails/{{product1._id}}" class="product-link">{{ product1.vehicleName
+                                }}</a>
+                                 <button id="addToCartBtn" onclick="goToSelectStore('{{product1._id}}')"
+                            class="btn btn-pill btn-outline-primary btn-sm" data-toggle="toast"
+                                data-target="#cart-toast">Add to Cart</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="comparison-item"><span class="remove-item"><svg xmlns="http://www.w3.org/2000/svg"
+                                    width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                    class="feather feather-x">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg></span>
+                            <a class="comparison-item-thumb" href="/productdetails/{{product2._id}}"
+                                class="product-link"><img src="/product-images/{{product2._id}}-front.jpg" alt=""
+                                    class="product-image"></a><a class="comparison-item-title"
+                                href="/productdetails/{{product2._id}}" class="product-link">{{ product2.vehicleName
+                                }}</a>
+                            <button id="addToCartBtn" onclick="goToSelectStore('{{product2._id}}')"
+                            class="btn btn-pill btn-outline-primary btn-sm" data-toggle="toast"
+                                data-target="#cart-toast">Add to Cart</button>
+                        </div>
+                    </td>
+                </tr>
+            </thead>
+            <tbody id="summary" data-filter="target">
+                <tr class="bg-secondary">
+                    <th class="text-uppercase">Summary</th>
+                    <td><span class="text-dark font-weight-semibold">{{ product1.vehicleName }}</span></td>
+                    <td><span class="text-dark font-weight-semibold">{{ product2.vehicleName }}</span></td>
+                </tr>
+                <tr>
+                    <th>Engine</th>
+                    <td>{{ product1.engine }}</td>
+                    <td>{{ product2.engine }}L</td>
+                </tr>
+                <tr>
+                    <th>Mileage</th>
+                    <td>{{ product1.mileage }}</td>
+                    <td>{{ product2.mileage }}</td>
+                </tr>
+                <tr>
+                    <th>Transmission</th>
+                    <td>{{ product1.transmission }}</td>
+                    <td>{{ product2.transmission }}</td>
+                </tr>
+            </tbody>
+            <tbody id="general" data-filter="target">
+                <tr class="bg-secondary">
+                    <th class="text-uppercase">General</th>
+                    <td><span class="text-dark font-weight-semibold">{{ product1.vehicleName }}</span></td>
+                    <td><span class="text-dark font-weight-semibold">{{ product2.vehicleName }}</span></td>
+                </tr>
+                <tr>
+                    <th>Make Year</th>
+                    <td>{{ product1.year }}</td>
+                    <td>{{ product2.year }}</td>
+                </tr>
+                <tr>
+                    <th>Color</th>
+                    <td>{{ product1.color }}</td>
+                    <td>{{ product2.color }} </td>
+                </tr>
+                <tr>
+                    <th>Fuel Type</th>
+                    <td>{{ product1.fuelType }}</td>
+                    <td>{{ product2.fuelType }}</td>
+                </tr>
+                <tr>
+                    <th>Number Of Doors</th>
+                    <td>{{ product1.numDoors }}</td>
+                    <td>{{ product2.numDoors }}</td>
+                </tr>
+                <tr>
+                    <th>Number Of Seats</th>
+                    <td>{{ product1.numSeats }}</td>
+                    <td>{{ product2.numSeats }}</td>
+                </tr>
+                <tr>
+                    <th>Features</th>
+                    <td>{{ product1.features }}</td>
+                    <td>{{ product2.features }}</td>
+                </tr>
+
+            </tbody>
+            <tbody id="price" data-filter="target">
+                <tr class="bg-secondary">
+                    <th class="text-uppercase">Price &amp; rating</th>
+                    <td><span class="text-dark font-weight-semibold">{{ product1.vehicleName }}</span></td>
+                    <td><span class="text-dark font-weight-semibold">{{ product2.vehicleName }}</span></td>
+                </tr>
+                <tr>
+                    <th>Price</th>
+                    <td>${{ product1.price }}</td>
+                    <td>${{ product2.price }}</td>
+                </tr>
+                <tr>
+                    <th>Booking Amount</th>
+                    <td>${{ product1.BookingAmount }}</td>
+                    <td>${{ product2.BookingAmount }}</td>
+                </tr>
+                <tr>
+                    <th>Rating</th>
+                    <td>4.5/5</td>
+                    <td>4.5/5</td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td>
+                        <button id="addToCartBtn" onclick="goToSelectStore('{{product1._id}}')"
+                        class="btn btn-outline-primary btn-block" data-toggle="toast" data-target="#cart-toast">Add to Cart</button>
+                    </td>
+                    <td>
+                    <button id="addToCartBtn" onclick="goToSelectStore('{{product2._id}}')"
+                        class="btn btn-outline-primary btn-block" data-toggle="toast" data-target="#cart-toast">Add to Cart</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    function goToSelectStore(productId) {
+        // Redirect to the select-store page
+        window.location.href = '/select-store?_id=' + productId;
+    }
+</script>
 
 </html>

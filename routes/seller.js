@@ -24,7 +24,10 @@ router.get('/', async function (req, res, next) {
       const totalSales = await sellerHelpers.getTotalSales(sellerId);
       const totalOrders = await sellerHelpers.getTotalOrders(sellerId);
       const totalAmount = await sellerHelpers.getTotalAmount(sellerId);
-      res.render('seller/view-products', { seller: true, seller, totalSales, totalOrders, totalAmount  });
+      const recentOrders = await sellerHelpers.getRecentOrders(sellerId);
+
+      // console.log("recentOrders",recentOrders)
+      res.render('seller/view-products', { seller: true, seller, totalSales, totalOrders, totalAmount,recentOrders  });
     } else {
       res.redirect('/seller/sellerlogin'); // Redirect to the seller login page if seller is not logged in
     }

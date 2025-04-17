@@ -326,7 +326,6 @@ getTotalOrders: () => {
       },
       {
         $addFields: {
-          // Convert the date string to ISO 8601 format ('YYYY-MM-DD')
           isoDate: {
             $dateFromParts: {
               year: { $toInt: { $substr: ['$products.date', 6, 4] } },

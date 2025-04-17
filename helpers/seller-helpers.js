@@ -201,6 +201,57 @@ module.exports = {
             reject(error);
           }
         });
-      }
+      },
+      getRecentOrders: (sellerId) => {
+        return new Promise((resolve, reject) => {
+          console.log(sellerId)
+            db.get().collection(collection.ORDER_COLLECTION).aggregate([
+                { $match: { sellerId: ObjectID(sellerId) } },
+                { $sort: { date: -1 } },
+                { $limit: 7 },
+                {
+                  $lookup: {
+                    from: collection.USER_COLLECTION,
+                    localField: 'userId',
+                    foreignField: '_id',
+                    as: 'user'
+                  }
+                },
+                {
+                  $unwind: '$user'
+                },
+                {
+                    $lookup: {
+                        from: collection.PRODUCT_COLLECTION,
+                        localField: 'products.productId',
+                        foreignField: '_id',
+                        as: 'productDetails'
+                    }
+                },
+                {
+                    $project: {
+                      userName: '$user.fname',
+                        productName: { $arrayElemAt: ['$productDetails.vehicleName', 0] },
+                        quantity: { $arrayElemAt: ['$products.quantity', 0] },
+                        orderDate: { $arrayElemAt: ['$products.date', 0] },
+                        status: '$status'
+                    }
+                }
+            ]).toArray((error, orders) => {
+              // console.log("orders",orders)
+                if (error) {
+                    reject(new Error('Error fetching recent orders: ' + error.message));
+                } else {
+                    resolve(orders.map(order => ({
+                        userName: order.userName,
+                        productName: order.productName,
+                        quantity: order.quantity,
+                        orderDate: order.orderDate,
+                        status: order.status
+                    })));
+                }
+            });
+        });
+    },    
       
 }

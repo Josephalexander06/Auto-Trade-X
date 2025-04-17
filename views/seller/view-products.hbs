@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <!-- Coding By CodingNepal - codingnepalweb.com -->
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <!----======== CSS ======== -->
     <link rel="stylesheet" href="/stylesheets/seller-dashboard.css">
-     
+
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 
     <title>Admin Dashboard Panel</title>
 </head>
+
 <body>
     <nav>
         <div class="logo-name">
             <div class="logo-image">
-               <img src="images/logo.png" alt="">
+                <img src="images/logo.png" alt="">
             </div>
 
             <span class="logo_name">Seller Hub</span>
@@ -27,51 +29,51 @@
         <div class="menu-items">
             <ul class="nav-links">
                 <li><a href="#">
-                    <i class="uil uil-estate"></i>
-                    <span class="link-name">Dahsboard</span>
-                </a></li>
-                 <li><a href="/seller/get-Products">
-                    <i class="uil  uil-archive"></i>
-                    <span class="link-name">Products</span>
-                </a></li>
-                 <li><a href="/seller/add-productname">
-                    <i class="uil uil-shopping-basket"></i>
-                    <span class="link-name">Add Product Name</span>
-                </a></li>
+                        <i class="uil uil-estate"></i>
+                        <span class="link-name">Dahsboard</span>
+                    </a></li>
+                <li><a href="/seller/get-Products">
+                        <i class="uil  uil-archive"></i>
+                        <span class="link-name">Products</span>
+                    </a></li>
+                <li><a href="/seller/add-productname">
+                        <i class="uil uil-shopping-basket"></i>
+                        <span class="link-name">Add Product Name</span>
+                    </a></li>
                 <li><a href="/seller/add-product">
-                    <i class="uil  uil-shop"></i>
-                    <span class="link-name">Add Product</span>
-                </a></li>
-                 <li><a href="/seller/edit-product">
-                    <i class="uil  uil-edit"></i>
-                    <span class="link-name">Edit Product</span>
-                </a></li>
+                        <i class="uil  uil-shop"></i>
+                        <span class="link-name">Add Product</span>
+                    </a></li>
+                <li><a href="/seller/edit-product">
+                        <i class="uil  uil-edit"></i>
+                        <span class="link-name">Edit Product</span>
+                    </a></li>
                 <li><a href="/seller/sellerorders">
-                    <i class="uil uil-truck"></i>
-                    <span class="link-name">Order</span>
-                </a></li>
+                        <i class="uil uil-truck"></i>
+                        <span class="link-name">Order</span>
+                    </a></li>
                 <li><a href="/seller/update-stock">
-                    <i class="uil  uil-truck-loading"></i>
-                    <span class="link-name">Update Stock</span>
-                </a></li>
+                        <i class="uil  uil-truck-loading"></i>
+                        <span class="link-name">Update Stock</span>
+                    </a></li>
             </ul>
-            
+
             <ul class="logout-mode">
                 <li><a href="/seller/logout">
-                    <i class="uil uil-signout"></i>
-                    <span class="link-name">Logout</span>
-                </a></li>
+                        <i class="uil uil-signout"></i>
+                        <span class="link-name">Logout</span>
+                    </a></li>
 
                 <li class="mode">
                     <a href="#">
                         <i class="uil uil-moon"></i>
-                    <span class="link-name">Dark Mode</span>
-                </a>
+                        <span class="link-name">Dark Mode</span>
+                    </a>
 
-                <div class="mode-toggle">
-                  <span class="switch"></span>
-                </div>
-            </li>
+                    <div class="mode-toggle">
+                        <span class="switch"></span>
+                    </div>
+                </li>
             </ul>
         </div>
     </nav>
@@ -83,7 +85,7 @@
             {{!-- <div class="search-box">
                 name
             </div> --}}
-            
+
             <!--<img src="images/profile.jpg" alt="">-->
         </div>
 
@@ -116,98 +118,80 @@
             <div class="activity">
                 <div class="title">
                     <i class="uil uil-clock-three"></i>
-                    <span class="text">Recent Activity</span>
+                    <span class="text">Recent Orders</span>
                 </div>
 
                 <div class="activity-data">
-                    <div class="data names">
-                        <span class="data-title">Name</span>
-                        <span class="data-list">Prem Shahi</span>
-                        <span class="data-list">Deepa Chand</span>
-                        <span class="data-list">Manisha Chand</span>
-                        <span class="data-list">Pratima Shahi</span>
-                        <span class="data-list">Man Shahi</span>
-                        <span class="data-list">Ganesh Chand</span>
-                        <span class="data-list">Bikash Chand</span>
+                    <div class="data">
+                        <span class="data-title">User Name</span>
+                        {{#each recentOrders}}
+                        <span class="data-list">{{ this.userName }}</span>
+                        {{/each}}
                     </div>
-                    <div class="data email">
-                        <span class="data-title">Email</span>
-                        <span class="data-list">premshahi@gmail.com</span>
-                        <span class="data-list">deepachand@gmail.com</span>
-                        <span class="data-list">prakashhai@gmail.com</span>
-                        <span class="data-list">manishachand@gmail.com</span>
-                        <span class="data-list">pratimashhai@gmail.com</span>
-                        <span class="data-list">manshahi@gmail.com</span>
-                        <span class="data-list">ganeshchand@gmail.com</span>
+                    <div class="data">
+                        <span class="data-title">Ordered Product</span>
+                        {{#each recentOrders}}
+                        <span class="data-list">{{ this.productName }}</span>
+                        {{/each}}
                     </div>
-                    <div class="data joined">
-                        <span class="data-title">Joined</span>
-                        <span class="data-list">2022-02-12</span>
-                        <span class="data-list">2022-02-12</span>
-                        <span class="data-list">2022-02-13</span>
-                        <span class="data-list">2022-02-13</span>
-                        <span class="data-list">2022-02-14</span>
-                        <span class="data-list">2022-02-14</span>
-                        <span class="data-list">2022-02-15</span>
+                    <div class="data">
+                        <span class="data-title">Quantity</span>
+                        {{#each recentOrders}}
+                        <span class="data-list">{{ this.quantity }}</span>
+                        {{/each}}
                     </div>
-                    <div class="data type">
-                        <span class="data-title">Type</span>
-                        <span class="data-list">New</span>
-                        <span class="data-list">Member</span>
-                        <span class="data-list">Member</span>
-                        <span class="data-list">New</span>
-                        <span class="data-list">Member</span>
-                        <span class="data-list">New</span>
-                        <span class="data-list">Member</span>
+                    <div class="data">
+                        <span class="data-title">Ordered Date</span>
+                        {{#each recentOrders}}
+                        <span class="data-list">{{ this.orderDate }}</span>
+                        {{/each}}
                     </div>
-                    <div class="data status">
+                    <div class="data">
                         <span class="data-title">Status</span>
-                        <span class="data-list">Liked</span>
-                        <span class="data-list">Liked</span>
-                        <span class="data-list">Liked</span>
-                        <span class="data-list">Liked</span>
-                        <span class="data-list">Liked</span>
-                        <span class="data-list">Liked</span>
-                        <span class="data-list">Liked</span>
+                        {{#each recentOrders}}
+                        <span class="data-list">{{ this.status }}</span>
+                        {{/each}}
                     </div>
                 </div>
             </div>
+
         </div>
     </section>
 
     <script>
-      const body = document.querySelector("body"),
-      modeToggle = body.querySelector(".mode-toggle");
-      sidebar = body.querySelector("nav");
-      sidebarToggle = body.querySelector(".sidebar-toggle");
+        const body = document.querySelector("body"),
+            modeToggle = body.querySelector(".mode-toggle");
+        sidebar = body.querySelector("nav");
+        sidebarToggle = body.querySelector(".sidebar-toggle");
 
-let getMode = localStorage.getItem("mode");
-if(getMode && getMode ==="dark"){
-    body.classList.toggle("dark");
-}
+        let getMode = localStorage.getItem("mode");
+        if (getMode && getMode === "dark") {
+            body.classList.toggle("dark");
+        }
 
-let getStatus = localStorage.getItem("status");
-if(getStatus && getStatus ==="close"){
-    sidebar.classList.toggle("close");
-}
+        let getStatus = localStorage.getItem("status");
+        if (getStatus && getStatus === "close") {
+            sidebar.classList.toggle("close");
+        }
 
-modeToggle.addEventListener("click", () =>{
-    body.classList.toggle("dark");
-    if(body.classList.contains("dark")){
-        localStorage.setItem("mode", "dark");
-    }else{
-        localStorage.setItem("mode", "light");
-    }
-});
+        modeToggle.addEventListener("click", () => {
+            body.classList.toggle("dark");
+            if (body.classList.contains("dark")) {
+                localStorage.setItem("mode", "dark");
+            } else {
+                localStorage.setItem("mode", "light");
+            }
+        });
 
-sidebarToggle.addEventListener("click", () => {
-    sidebar.classList.toggle("close");
-    if(sidebar.classList.contains("close")){
-        localStorage.setItem("status", "close");
-    }else{
-        localStorage.setItem("status", "open");
-    }
-})
+        sidebarToggle.addEventListener("click", () => {
+            sidebar.classList.toggle("close");
+            if (sidebar.classList.contains("close")) {
+                localStorage.setItem("status", "close");
+            } else {
+                localStorage.setItem("status", "open");
+            }
+        })
     </script>
 </body>
+
 </html>

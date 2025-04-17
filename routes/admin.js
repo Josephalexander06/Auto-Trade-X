@@ -271,6 +271,7 @@ router.get('/add-banner', async(req, res) => {
 router.post('/add-banner', async (req, res) => {
   try {
     const { bannerName } = req.body;
+    // console.log(req.files.image)
     const image = req.files.image;
 
     if (!bannerName) {
@@ -281,17 +282,17 @@ router.post('/add-banner', async (req, res) => {
       return res.status(400).send('Image is required.');
     }
 
-    // Check image dimensions
-    const dimensions = sizeOf(image.tempFilePath);
-    const { width, height } = dimensions;
+    // // Check image dimensions
+    // const dimensions = sizeOf(image.tempFilePath);
+    // const { width, height } = dimensions;
 
-    // Check if dimensions meet the specified criteria
-    if (width !== 1600 || height !== 265) {
-      return res.status(400).send('Invalid image dimensions. Image must be 1600px wide and 265px tall.');
-    }
-
+    // // Check if dimensions meet the specified criteria
+    // if (width !== 1600 || height !== 265) {
+    //   return res.status(400).send('Invalid image dimensions. Image must be 1600px wide and 265px tall.');
+    // }
+  
     const newBanner = await productHelpers.addBanner({ bannerName });
-
+    console.log(newBanner)
     // Move the image to the appropriate directory
     const bannerId = newBanner._id;
     await image.mv(`./public/banner-images/${bannerId}.jpg`);
@@ -357,5 +358,11 @@ router.get('/admin-message', async (req, res) => {
   res.render('admin/admin-message', { admin: true });
 });
 
+router.get('/logout', (req, res) => {
+  // Clear the admin session
+  req.session.admin = null;
+  // Redirect the user to the admin login page
+  res.redirect('/admin'); // Replace with the actual login page URL
+}); 
 
 module.exports = router;

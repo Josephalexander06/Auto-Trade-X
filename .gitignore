@@ -1,2 +1,6 @@
 # ignore ALL  files
-/node_modules
+node_modules/
+
+bin/
+
+.vscode/
